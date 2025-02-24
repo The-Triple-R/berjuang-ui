@@ -14,6 +14,7 @@
   --mtext: #000; /* text that is placed on background with main color e.g. text color of default button */
   --ring: #000;
   --ring-offset: #fff;
+  --footer-text: #ffffffa8;
 
   --border-radius: 5px;
   --box-shadow-x: 4px;

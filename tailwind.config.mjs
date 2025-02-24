@@ -16,6 +16,7 @@ export default {
         border: 'var(--border)',
         ring: 'var(--ring)',
         ringOffset: 'var(--ring-offset)',
+        footerText: 'var(--footer-text)',
 
         secondaryBlack: '#212121',
       },
