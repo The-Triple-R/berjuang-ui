@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className='relative flex flex-col gap-44 items-center justify-center bg-bg dark:bg-darkBg px-5 py-[200px] min-h-[100svh]'>
-        <section className='max-w-[800px] flex flex-col items-center gap-5'>
+      <main className='relative flex flex-col gap-44 items-center justify-center bg-bg dark:bg-darkBg min-h-screen'>
+        <section id='home' className='min-h-screen flex flex-col items-center justify-center px-4 md:px-8 gap-5'>
           <h3>
             <Badge className='font-bold text-xl'>BerjUANG</Badge>
           </h3>
@@ -22,7 +22,7 @@ export default function Home() {
         </section>
       </main>
       <div>
-        <section className='border-t-4 border-border dark:border-darkBorder font-semibold p-10'>
+        <section id='features' className='border-t-4 border-border dark:border-darkBorder font-semibold p-10'>
           <div className='w-[1300px] max-w-full mx-auto'>
             <h3 className='text-center text-2xl mb-16'>Features</h3>
             <div className='grid grid-cols-2 gap-5'>
