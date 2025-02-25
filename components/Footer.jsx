@@ -29,7 +29,7 @@ function Footer() {
             <a href='#benefits'>{langData[lang].navbarLandingPage.benefits}</a>
           </div>
         </div>
-        <p className='text-center py-7 font-base'>Copyright &copy; 2025 BerjUANG. | All rights reserved.</p>
+        <p className='text-center py-7 font-base'>{langData[lang].footerSection.copyright}</p>
       </div>
     </footer>
   );
