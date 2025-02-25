@@ -1,15 +1,18 @@
+'use client';
 import FeatureCard from '@/components/FeatureCard';
 import Header from '@/components/Header';
-import { Badge } from '@/components/ui/badge';
 import { MdAttachMoney, MdAutoAwesome, MdQuestionMark, MdRecommend, MdAccessTime } from 'react-icons/md';
 import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { TbReport } from 'react-icons/tb';
-import { FaSquareXTwitter, FaInstagram, FaFacebookF } from 'react-icons/fa6';
 import { Button } from '@/components/ui/button';
 import Image from "next/image";
-
+import Footer from '@/components/Footer';
+import langData from '@/lib/lang';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 export default function Home() {
+  const { lang } = useLanguageStore((state) => state);
+
   return (
     <>
       <Header />
@@ -116,28 +119,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className='font-semibold bg-[#262626] text-footerText pt-16 px-10'>
-          <div className='max-w-full mx-auto'>
-            <div className='grid grid-cols-3 gap-5 text-xl border-b border-[#ffffff13] pb-16'>
-              <div className='col-span-2'>
-                <h3>
-                  <Badge className='font-bold text-xl mb-4'>BerjUANG</Badge>
-                </h3>
-                <div className='flex text-2xl gap-2'>
-                  <FaFacebookF />
-                  <FaInstagram />
-                  <FaSquareXTwitter />
-                </div>
-              </div>
-              <div className='flex flex-col gap-2'>
-                <h5 className='mb-3 text-bg'>PAGES</h5>
-                <a href='#test text-md'>Home</a>
-                <a href='#test text-md'>Features</a>
-              </div>
-            </div>
-            <p className='text-center py-7 font-base'>Copyright &copy; 2025 BerjUANG. | All rights reserved.</p>
-          </div>
-        </footer>
+      <Footer />
     </>
   );
 }

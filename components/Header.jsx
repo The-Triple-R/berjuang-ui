@@ -1,7 +1,11 @@
-"use client"
+'use client';
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import GoogleIcon from './icons/google-icon';
+import { BsTranslate } from 'react-icons/bs';
+import { Card } from './ui/card';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 const MenuItem = ({ href, children, isActive }) => (
   <li className="flex border-b-2 md:border-none border-black justify-center">
@@ -14,16 +18,22 @@ const MenuItem = ({ href, children, isActive }) => (
   </li>
 );
 
-const LoginButton = () => (
-  <Button className='bg-white'>
-    <GoogleIcon />
-    Login with Google
-  </Button>
-);
+const LoginButton = () => {
+  const { lang } = useLanguageStore((state) => state);
+
+  return (
+    <Button className='bg-white'>
+      <GoogleIcon />
+      {langData[lang].loginButton}
+    </Button>
+  );
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  const { lang, setLang } = useLanguageStore((state) => state);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,7 +41,7 @@ const Header = () => {
 
   useEffect(() => {
     const sections = document.querySelectorAll('section');
-    
+
     const onScroll = () => {
       let currentSection = '';
 
@@ -40,7 +50,7 @@ const Header = () => {
         const offset = section.offsetTop - 100;
         const height = section.offsetHeight;
         const id = section.getAttribute('id');
-    
+
         if (top >= offset && top < offset + height) {
           currentSection = id;
         }
@@ -60,21 +70,61 @@ const Header = () => {
       </h1>
 
       <nav
-        className={`absolute md:static border-y-2 border-black top-full ${isMenuOpen ? 'left-0 opacity-100' : 'left-[-100%] opacity-0'} md:opacity-100 bg-white dark:bg-secondaryBlack md:border-none dark:border-darkNavBorder bg-black transition-all duration-300 ease-in-out w-full`}
+        className={`absolute md:static top-full ${
+          isMenuOpen ? 'left-0 opacity-100' : 'left-[-100%] opacity-0'
+        } md:opacity-100 bg-white dark:bg-secondaryBlack border-t-4 md:border-none border-border dark:border-darkNavBorder transition-all duration-300 ease-in-out w-full`}
       >
-        <ul className="flex flex-col  bg-white md:bg-white md:flex-row">
-          <MenuItem href="#home" isActive={activeSection === 'home'}>Home</MenuItem>
-          <MenuItem href="#features" isActive={activeSection === 'features'}>Features</MenuItem>
-          <MenuItem href="#benefits" isActive={activeSection === 'benefits'}>Benefits</MenuItem>
-          <MenuItem href="#tim" isActive={activeSection === 'tim'}>Our Tim</MenuItem>
-
-          <li className="md:hidden border-black flex justify-center px-4 py-3 bor">
+        <ul className='flex flex-col md:flex-row'>
+          <MenuItem
+            href='#home'
+            isActive={activeSection === 'home'}
+          >
+            {langData[lang].navbarLandingPage.home}
+          </MenuItem>
+          <MenuItem
+            href='#features'
+            isActive={activeSection === 'features'}
+          >
+            {langData[lang].navbarLandingPage.features}
+          </MenuItem>
+          <MenuItem
+            href='#benefits'
+            isActive={activeSection === 'benefits'}
+          >
+            {langData[lang].navbarLandingPage.benefits}
+          </MenuItem>
+          <li className='md:hidden border-b-2 border-mtext flex justify-center px-4 py-3 bor'>
             <LoginButton />
           </li>
         </ul>
       </nav>
 
-      <div className="hidden md:flex justify-end">
+      <div className='hidden md:flex justify-end gap-5'>
+        <div className='relative'>
+          <Button className='rounded-full bg-white w-10'>
+            <BsTranslate />
+          </Button>
+          <ul className='absolute'>
+            <Card className='bg-white flex flex-col gap-2'>
+              <li>
+                <button
+                  className='cursor-pointer'
+                  onClick={() => setLang('id')}
+                >
+                  Indonesia
+                </button>
+              </li>
+              <li>
+                <button
+                  className='cursor-pointer'
+                  onClick={() => setLang('en')}
+                >
+                  English
+                </button>
+              </li>
+            </Card>
+          </ul>
+        </div>
         <LoginButton />
       </div>
       
