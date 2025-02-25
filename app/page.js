@@ -1,41 +1,51 @@
+'use client';
 import FeatureCard from '@/components/FeatureCard';
 import Header from '@/components/Header';
 import { Badge } from '@/components/ui/badge';
 import { MdAttachMoney, MdAutoAwesome, MdQuestionMark, MdRecommend, MdAccessTime } from 'react-icons/md';
 import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { TbReport } from 'react-icons/tb';
-import { FaSquareXTwitter, FaInstagram, FaFacebookF } from 'react-icons/fa6';
 import { Button } from '@/components/ui/button';
-
+import Footer from '@/components/Footer';
+import langData from '@/lib/lang';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 export default function Home() {
+  const { lang } = useLanguageStore((state) => state);
+
   return (
     <>
       <Header />
       <main className='relative flex flex-col gap-44 items-center justify-center bg-bg dark:bg-darkBg min-h-screen'>
-        <section id='home' className='min-h-screen flex flex-col items-center justify-center px-4 md:px-8 gap-5'>
+        <section
+          id='home'
+          className='min-h-screen flex flex-col items-center justify-center px-4 md:px-8 gap-5'
+        >
           <h3>
             <Badge className='font-bold text-xl'>BerjUANG</Badge>
           </h3>
-          <p className='font-bold text-6xl text-center'>Kendalikan Keuangan Bisnis Anda dengan AI</p>
-          <p className='text-lg text-center'>Kelola keuangan UMKM Anda dengan mudah dan efisien. BerjUANG memberikan insight berharga untuk membantu bisnis Anda tumbuh.</p>
+          <p className='font-bold text-6xl text-center'>{langData[lang].heroSection.title}</p>
+          <p className='text-lg text-center'>{langData[lang].heroSection.subTitle}</p>
         </section>
       </main>
       <div>
-        <section id='features' className='border-t-4 border-border dark:border-darkBorder font-semibold p-10'>
+        <section
+          id='features'
+          className='border-t-4 border-border dark:border-darkBorder font-semibold p-10'
+        >
           <div className='w-[1300px] max-w-full mx-auto'>
-            <h3 className='text-center text-2xl mb-16'>Features</h3>
+            <h3 className='text-center text-2xl mb-16'>{langData[lang].featureSection.title}</h3>
             <div className='grid grid-cols-2 gap-5'>
-              <FeatureCard description='Analisis Keuangan Otomatis'>
+              <FeatureCard description={langData[lang].featureSection.featureDesc[0]}>
                 <MdAutoAwesome />
               </FeatureCard>
-              <FeatureCard description='Rekomendasi Keuangan Cerdas'>
+              <FeatureCard description={langData[lang].featureSection.featureDesc[1]}>
                 <MdRecommend />
               </FeatureCard>
-              <FeatureCard description='Laporan Keuangan Komprehensif'>
+              <FeatureCard description={langData[lang].featureSection.featureDesc[2]}>
                 <TbReport />
               </FeatureCard>
-              <FeatureCard description='Keamanan Data Terjamin'>
+              <FeatureCard description={langData[lang].featureSection.featureDesc[3]}>
                 <AiFillSafetyCertificate />
               </FeatureCard>
             </div>
@@ -43,58 +53,37 @@ export default function Home() {
         </section>
         <section className='border-t-4 border-border dark:border-darkBorder p-10'>
           <div className='w-[1100px] max-w-full mx-auto'>
-            <h3 className='text-center text-2xl mb-1 font-semibold'>Manfaat Produk</h3>
-            <p className='text-center mb-9'>Apa yang Bisa BerjUANG Lakukan untuk Bisnis Anda?</p>
+            <h3 className='text-center text-2xl mb-1 font-semibold'>{langData[lang].benefitSection.title}</h3>
+            <p className='text-center mb-9'>{langData[lang].benefitSection.subTitle}</p>
             <div className='grid grid-cols-3 gap-5 justify-items-center'>
-              <div className='text-center flex flex-col gap-4 w-[250px]'>
+              <div className='text-center flex flex-col gap-4 w-[250px] items-center'>
                 <div className='flex justify-center'>
                   <MdAttachMoney size={64} />
                 </div>
-                <h6 className='w-[200px] flex mx-auto font-semibold'>Meningkatkan Efisiensi Keuangan</h6>
-                <p>Kelola keuangan bisnis Anda dengan lebih cepat dan mudah.</p>
+                <h6 className='w-[200px] flex justify-center font-semibold'>{langData[lang].benefitSection.firstBenefitTitle}</h6>
+                <p className='text-center'>{langData[lang].benefitSection.firstBenefitDesc}</p>
               </div>
-              <div className='text-center flex flex-col gap-4 w-[250px]'>
+              <div className='text-center flex flex-col gap-4 w-[250px] items-center'>
                 <div className='flex justify-center'>
                   <MdAccessTime size={64} />
                 </div>
-                <h6 className='w-[200px] flex mx-auto font-semibold'>Menghemat Waktu dan Biaya</h6>
-                <p>Kurangi waktu yang dihabiskan untuk mengelola keuangan dan fokus pada pengembangan bisnis Anda.</p>
+                <h6 className='w-[200px] flex justify-center font-semibold'>{langData[lang].benefitSection.secondBenefitTitle}</h6>
+                <p>{langData[lang].benefitSection.secondBenefitDesc}</p>
               </div>
-              <div className='text-center flex flex-col gap-4 w-[250px]'>
+              <div className='text-center flex flex-col gap-4 w-[250px] items-center'>
                 <div className='flex justify-center'>
                   <MdQuestionMark size={64} />
                 </div>
-                <h6 className='w-[200px] flex mx-auto font-semibold'>Mengambil Keputusan Tepat</h6>
-                <p>Dapatkan insight berharga untuk membuat keputusan keuangan yang lebih baik.</p>
+                <h6 className='w-[200px] flex justify-center font-semibold'>{langData[lang].benefitSection.thirdBenefitTitle}</h6>
+                <p>{langData[lang].benefitSection.thirdBenefitDesc}</p>
               </div>
             </div>
             <div className='flex justify-center mt-10'>
-              <Button className="text-xl">Coba Sekarang!</Button>
+              <Button className='text-xl'>{langData[lang].tryNowButton}</Button>
             </div>
           </div>
         </section>
-        <footer className='font-semibold bg-[#262626] text-footerText pt-16 px-10'>
-          <div className='w-[600px] max-w-full mx-auto'>
-            <div className='grid grid-cols-3 gap-5 text-xl border-b border-[#ffffff13] pb-16'>
-              <div className='col-span-2'>
-                <h3>
-                  <Badge className='font-bold text-xl mb-4'>BerjUANG</Badge>
-                </h3>
-                <div className='flex text-2xl gap-2'>
-                  <FaFacebookF />
-                  <FaInstagram />
-                  <FaSquareXTwitter />
-                </div>
-              </div>
-              <div className='flex flex-col gap-2'>
-                <h5 className='mb-3 text-bg'>PAGES</h5>
-                <a href='#test text-md'>Home</a>
-                <a href='#test text-md'>Features</a>
-              </div>
-            </div>
-            <p className='text-center py-7 font-base'>Copyright &copy; 2025 BerjUANG. | All rights reserved.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
