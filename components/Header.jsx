@@ -4,10 +4,10 @@ import { Button } from './ui/button';
 import GoogleIcon from './icons/google-icon';
 
 const MenuItem = ({ href, children, isActive }) => (
-  <li className="border-b-2 md:border-none border-mtext flex justify-center">
+  <li className="flex border-b-2 md:border-none border-black justify-center">
     <a
       href={href}
-      className={`px-4 py-3 text-lg block ${isActive ? 'text-main' : 'text-mtext'} dark:text-white`}
+      className={`px-4 py-3 text-lg block ${isActive ? 'text-main' : 'text-mtext'} hover:text-main dark:text-white`}
     >
       {children}
     </a>
@@ -54,28 +54,21 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="sticky left-0 top-0 z-20 flex md:grid md:grid-cols-[1fr,auto,1fr] items-center w-full border-b-4 border-border dark:border-darkNavBorder bg-white dark:bg-secondaryBlack p-4 md:py-2 md:px-8">
+    <header className="sticky left-0 top-0 z-20 flex md:grid md:grid-cols-[1fr,auto,1fr] items-center w-full border-b-4 border-border dark:border-darkNavBorder justify-between bg-white dark:bg-secondaryBlack p-4 md:py-2 md:px-8">
       <h1 className="uppercase font-extrabold text-xl md:text-2xl text-mtext">
         berj<span className="text-main">uang</span>
       </h1>
 
-      <button
-        onClick={toggleMenu}
-        className="md:hidden font-extrabold text-2xl flex items-center justify-center text-gray-800 dark:text-white transition-transform duration-300 ease-in-out"
-        style={{ transform: isMenuOpen ? 'rotate(360deg)' : 'rotate(0deg)' }}
-      >
-        {isMenuOpen ? '✖' : '☰'}
-      </button>
-
       <nav
-        className={`absolute md:static top-full ${isMenuOpen ? 'left-0 opacity-100' : 'left-[-100%] opacity-0'} md:opacity-100 bg-white dark:bg-secondaryBlack border-t-4 md:border-none border-border dark:border-darkNavBorder transition-all duration-300 ease-in-out w-full`}
+        className={`absolute md:static border-y-2 border-black top-full ${isMenuOpen ? 'left-0 opacity-100' : 'left-[-100%] opacity-0'} md:opacity-100 bg-white dark:bg-secondaryBlack md:border-none dark:border-darkNavBorder bg-black transition-all duration-300 ease-in-out w-full`}
       >
-        <ul className="flex flex-col md:flex-row">
+        <ul className="flex flex-col  bg-white md:bg-white md:flex-row">
           <MenuItem href="#home" isActive={activeSection === 'home'}>Home</MenuItem>
           <MenuItem href="#features" isActive={activeSection === 'features'}>Features</MenuItem>
           <MenuItem href="#benefits" isActive={activeSection === 'benefits'}>Benefits</MenuItem>
+          <MenuItem href="#tim" isActive={activeSection === 'tim'}>Our Tim</MenuItem>
 
-          <li className="md:hidden border-b-2 border-mtext flex justify-center px-4 py-3 bor">
+          <li className="md:hidden border-black flex justify-center px-4 py-3 bor">
             <LoginButton />
           </li>
         </ul>
@@ -84,6 +77,14 @@ const Header = () => {
       <div className="hidden md:flex justify-end">
         <LoginButton />
       </div>
+      
+      <button
+        onClick={toggleMenu}
+        className="md:hidden font-extrabold text-2xl flex items-center justify-center text-gray-800 dark:text-white transition-transform duration-300 ease-in-out"
+        style={{ transform: isMenuOpen ? 'rotate(360deg)' : 'rotate(0deg)' }}
+      >
+        {isMenuOpen ? '✖' : '☰'}
+      </button>
     </header>
   );
 };
