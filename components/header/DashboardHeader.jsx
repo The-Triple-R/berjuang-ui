@@ -2,6 +2,8 @@ import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { BsTranslate } from 'react-icons/bs';
+import { MdDarkMode, MdLightMode  } from 'react-icons/md';
 
 const DashboardHeader = () => {
   return (
@@ -15,15 +17,20 @@ const DashboardHeader = () => {
             <RxHamburgerMenu />
           </Button>
         </div>
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 [&_svg]:size-5'>
           <Button
-            className='rounded-full bg-white w-10 border'
+            className='rounded-full bg-white w-12 h-12 border'
             variant='reverse'
-          ></Button>
+          >
+            <MdDarkMode />
+            {/* <MdLightMode /> */}
+          </Button>
           <Button
-            className='rounded-full bg-white w-10 border'
+            className='rounded-full bg-white w-12 h-12 border '
             variant='reverse'
-          ></Button>
+          >
+            <BsTranslate />
+          </Button>
           <Avatar>
             <AvatarImage src='https://github.com/ekmass.png' />
             <AvatarFallback>SB</AvatarFallback>
