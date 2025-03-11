@@ -1,8 +1,14 @@
+import DashboardSideBar from '@/components/dashboardPage/DashboardSideBar';
+import DashboardHeader from '@/components/header/DashboardHeader';
+
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="flex">
-      <aside className="w-64 bg-gray-800 text-white p-4">Sidebar</aside>
-      <main className="flex-grow p-4">{children}</main>
+    <div className='lg:flex'>
+      <DashboardSideBar />
+      <div className='w-full'>
+        <DashboardHeader />
+        <main className='relative transition-all duration-500 ease-in-out lg:ml-64'>{children}</main>
+      </div>
     </div>
   );
 };
