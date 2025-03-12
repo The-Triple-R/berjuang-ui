@@ -58,12 +58,12 @@ export function TableTransaction({ datas = transactionData }) {
             </tbody>
           </Table>
 
-          <div className="flex justify-center items-center gap-2 mt-4">
-            <Button className="px-3 py-1 bg-gray-300 text-black">« Prev</Button>
-            <span className="text-lg font-semibold">1</span>
-            <span className="text-lg font-semibold">2</span>
-            <span className="text-lg font-semibold">3</span>
-            <Button className="px-3 py-1 bg-gray-300 text-black">Next »</Button>
+          <div className="flex justify-center items-center gap-3 mt-4">
+            <Button className="px-3 text-lg py-1 bg-gray-300 text-black">« Prev</Button>
+            <Button className="text-lg p-2 bg-gray-300 font-semibold">1</Button>
+            <Button className="text-lg p-2 bg-main font-semibold text-white">2</Button>
+            <Button className="text-lg p-2 bg-gray-300 font-semibold">3</Button>
+            <Button className="px-3 text-lg py-1 bg-gray-300 text-black">Next »</Button>
           </div>
         </>
       ) : (

@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import FeatureCard from '@/components/FeatureCard';
+import FeatureCard from '@/components/landingPage/features/FeatureCard';
 import { MdAttachMoney, MdAutoAwesome, MdQuestionMark, MdRecommend, MdAccessTime, MdCode, MdStorage } from 'react-icons/md';
 import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { TbReport } from 'react-icons/tb';
