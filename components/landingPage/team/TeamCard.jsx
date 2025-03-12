@@ -1,14 +1,24 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { FaLinkedin, FaInstagram, FaGithub } from "react-icons/fa";
 
-const TeamCard = ({ icon, title, desc }) => {
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+};
+
+const TeamCard = ({ icon, title, desc, name, role, linkedin, instagram, github }) => {
   const cardRef = useRef(null);
   const [isSmall, setIsSmall] = useState(false);
+  const [isMedium, setIsMedium] = useState(false);
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        setIsSmall(entry.contentRect.width < 300);
+        const width = entry.contentRect.width;
+        setIsSmall(width < 300);
+        setIsMedium(width >= 300 && width <= 450);
       }
     });
 
@@ -19,18 +29,55 @@ const TeamCard = ({ icon, title, desc }) => {
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={fadeInUp}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true }}
-      className={`border-2 border-black p-6 rounded-xl shadow-lg bg-white transition-all duration-300 hover:scale-105 
-        ${isSmall ? "flex flex-col text-center" : "flex flex-row items-center"}`}
+      className={`relative ml-4 border-2 border-black p-4 rounded-md bg-white ${
+        isSmall
+          ? "mt-14"
+          : isMedium
+          ? "mt-16"
+          : "py-6 mt-4"
+      }`}
     >
-      <div className="w-20 h-20 flex items-center justify-center border-2 border-black rounded-full bg-gray-100">
-        {icon}
+      <div
+        className={`absolute bg-white border-black flex flex-col items-center ${
+          isSmall
+            ? "left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 w-[7rem] h-[7rem] border-4 rounded-full"
+            : isMedium
+            ? "left-1/2 -translate-x-1/2 top-[-20%] w-[16rem] h-[10rem] border-2 rounded-md"
+            : "left-[-5%] top-1/2 -translate-y-1/2 border-2 rounded-md w-[10rem]"
+        }`}
+      >
+        <Image
+          src="/images/people.png"
+          alt="Profile Image"
+          width={400}
+          height={400}
+          className={`object-cover ${
+            isSmall ? "w-[100%] h-auto rounded-full" : isMedium ? "h-[100%] w-auto rounded-md" : "w-[100%] h-auto"
+          }`}
+          priority
+        />
       </div>
-      <div className={`${isSmall ? "mt-4" : "ml-6"}`}>
-        <h4 className="text-2xl font-bold">{title}</h4>
-        <p className="text-lg text-gray-600 mt-2">{desc}</p>
+      <div className={`flex flex-col gap-2 ${isSmall ? "pt-12 items-center text-center" : isMedium ? "pt-[6rem] text-center items-center" : "ml-[9rem]"}`}>
+        <div>
+          <h3 className="text-lg font-semibold">{name}</h3>
+          <p className="text-gray-500">{role}</p>
+        </div>
+        <p className="text-gray-700">{desc}</p>
+        <div className="flex gap-3 mt-2 text-lg">
+          <a href={linkedin} target="_blank" rel="noopener noreferrer">
+            <FaLinkedin className="text-blue-600 text-3xl hover:text-blue-800" />
+          </a>
+          <a href={instagram} target="_blank" rel="noopener noreferrer">
+            <FaInstagram className="text-pink-600 text-3xl hover:text-pink-800" />
+          </a>
+          <a href={github} target="_blank" rel="noopener noreferrer">
+            <FaGithub className="text-black text-3xl hover:text-gray-700" />
+          </a>
+        </div>
       </div>
     </motion.div>
   );

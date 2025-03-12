@@ -2,6 +2,8 @@ import Image from "next/image";
 import { motion } from 'framer-motion';
 import langData from '@/lib/lang';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -26,6 +28,9 @@ const Hero = () => {
         <p className="text-mtext md:text-start">
           <span className="uppercase font-extrabold">Berjuang</span> dapat membantu mengelola keuangan UMKM dengan bantuan AI supaya menjadi lebih mudah, cepat, dan akurat dengan insight cerdas untuk pertumbuhan bisnis.
         </p>
+        <Link href="/dashboard">
+          <Button>Menuju Dashboard</Button>
+        </Link>
       </motion.div>
 
       <motion.div 
