@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import FeatureCard from '@/components/FeatureCard';
+import FeatureCard from '@/components/landingPage/features/FeatureCard';
 import { MdAutoAwesome, MdRecommend } from 'react-icons/md';
 import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { TbReport } from 'react-icons/tb';
@@ -18,7 +18,7 @@ const features = [
 
 const Feature = () => {
   return (
-    <section id='features' className='border-t-4 py-16 px-8 border-border dark:border-darkBorder'>
+    <section id='features' className='flex flex-col gap-8 border-t-4 py-16 px-8 border-border dark:border-darkBorder'>
       <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} viewport={{ once: true }}>
         <h3 className='text-center text-4xl font-bold'>Our <span className='text-main'>Features</span></h3>
         <p className='text-center text-mtext text-lg mt-2'>Apa saja fitur yang diberikan oleh kami?</p>
