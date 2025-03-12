@@ -21,7 +21,7 @@ const Benefit = () => {
       </motion.div>
       <div className="grid grid-cols-1 mt-8 md:grid-cols-3 gap-6">
         {benefits.map((item, index) => (
-          <motion.div key={index} initial="hidden" whileInView="visible" variants={fadeInUp} viewport={{ once: true }} className='text-center flex flex-col border-2 border-black p-4 relative pt-[3.5rem]'>
+          <motion.div key={index} initial="hidden" whileInView="visible" variants={fadeInUp} viewport={{ once: true }} className='mt-10 text-center flex flex-col border-2 border-black p-4 relative pt-[3.5rem]'>
             <div className='absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 bg-white border-2 border-black rounded-full w-20 h-20 flex items-center justify-center'>
               {item.icon}
             </div>
