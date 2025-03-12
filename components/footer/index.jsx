@@ -14,7 +14,7 @@ function Footer() {
         <div className='grid grid-cols-3 gap-5 text-xl border-b border-[#ffffff13] pb-16'>
           <div className='col-span-2'>
             <h3>
-              <Badge className='font-bold text-xl mb-4'>BerjUANG</Badge>
+              <Badge className='font-bold text-xl mb-4'>BERJUANG</Badge>
             </h3>
             <div className='flex text-2xl gap-2'>
               <FaFacebookF />
@@ -27,6 +27,7 @@ function Footer() {
             <a href='#home'>{langData[lang].navbarLandingPage.home}</a>
             <a href='#features'>{langData[lang].navbarLandingPage.features}</a>
             <a href='#benefits'>{langData[lang].navbarLandingPage.benefits}</a>
+            <a href='#team'>Developer</a>
           </div>
         </div>
         <p className='text-center py-7 font-base'>{langData[lang].footerSection.copyright}</p>
