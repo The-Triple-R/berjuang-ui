@@ -14,10 +14,10 @@ const LanguageMenu = ({ isOpen, toggle, setLang }) => (
     >
       <Card className="bg-white py-4 flex flex-col shadow-md">
         {["id", "en"].map((lng) => (
-          <li key={lng} className="px-6 py-2 hover:bg-black hover:text-white">
-            <button className="cursor-pointer text-lg" onClick={() => setLang(lng)}>
+          <li key={lng} className="px-6 py-2 hover:bg-black hover:text-white cursor-pointer " onClick={() => setLang(lng)}>
+            <span className="text-lg">
               {lng === "id" ? "Indonesia" : "English"}
-            </button>
+            </span>
           </li>
         ))}
       </Card>

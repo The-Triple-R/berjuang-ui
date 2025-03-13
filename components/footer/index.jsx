@@ -27,7 +27,7 @@ function Footer() {
             <a href='#home'>{langData[lang].navbarLandingPage.home}</a>
             <a href='#features'>{langData[lang].navbarLandingPage.features}</a>
             <a href='#benefits'>{langData[lang].navbarLandingPage.benefits}</a>
-            <a href='#team'>Developer</a>
+            <a href='#team'>{langData[lang].navbarLandingPage.team}</a>
           </div>
         </div>
         <p className='text-center py-7 font-base'>{langData[lang].footerSection.copyright}</p>
