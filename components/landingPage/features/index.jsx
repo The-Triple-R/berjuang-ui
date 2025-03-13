@@ -3,25 +3,39 @@ import FeatureCard from '@/components/landingPage/features/FeatureCard';
 import { MdAutoAwesome, MdRecommend } from 'react-icons/md';
 import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { TbReport } from 'react-icons/tb';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 1 } },
 };
 
-const features = [
-  { icon: <MdAutoAwesome />, title: 'Analisis Keuangan Otomatis', desc: 'Dapatkan analisis keuangan secara otomatis dengan AI yang mengidentifikasi tren dan pola pengeluaran bisnis Anda.' },
-  { icon: <MdRecommend />, title: 'Rekomendasi Keuangan Cerdas', desc: 'Terima saran keuangan yang dipersonalisasi berdasarkan kondisi bisnis Anda untuk pengambilan keputusan yang lebih baik.' },
-  { icon: <TbReport />, title: 'Laporan Keuangan Komprehensif', desc: 'Akses laporan keuangan yang lengkap dan mudah dipahami untuk membantu Anda mengelola bisnis dengan lebih efektif.' },
-  { icon: <AiFillSafetyCertificate />, title: 'Keamanan Data Terjamin', desc: 'Data keuangan Anda dilindungi dengan enkripsi tingkat tinggi dan sistem keamanan canggih untuk menjaga privasi bisnis Anda.' },
-];
-
 const Feature = () => {
+  const { lang } = useLanguageStore(state => state);
+
+  const features = [
+    { icon: <MdAutoAwesome />, title: langData[lang].featureSection.featuresTitle[0], desc: langData[lang].featureSection.featuresDesc[0] },
+    { icon: <MdRecommend />, title: langData[lang].featureSection.featuresTitle[1], desc: langData[lang].featureSection.featuresDesc[1] },
+    { icon: <TbReport />, title: langData[lang].featureSection.featuresTitle[2], desc: langData[lang].featureSection.featuresDesc[2] },
+    { icon: <AiFillSafetyCertificate />, title: langData[lang].featureSection.featuresTitle[3], desc: langData[lang].featureSection.featuresDesc[3] },
+  ];
+
   return (
     <section id='features' className='flex flex-col gap-8 border-t-4 py-16 px-8 border-border dark:border-darkBorder'>
       <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} viewport={{ once: true }}>
-        <h3 className='text-center text-4xl font-bold'>Our <span className='text-main'>Features</span></h3>
-        <p className='text-center text-mtext text-lg mt-2'>Apa saja fitur yang diberikan oleh kami?</p>
+        <h3 className='text-center text-4xl font-bold'>
+        {lang === "en" ? (
+          <>
+            Our <span className='text-main'>Features</span>
+          </>
+        ) : (
+          <>
+            <span className='text-main'>Fitur</span> Kami
+          </>
+        )}
+        </h3>
+        <p className='text-center text-mtext text-lg mt-2'>{ langData[lang].featureSection.description }</p>
       </motion.div>
       <div className='grid md:grid-cols-2 gap-8'>
         {features.map((item, index) => (

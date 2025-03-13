@@ -23,13 +23,13 @@ const Hero = () => {
         className="flex flex-col gap-3 md:justify-center text-center md:text-start w-full"
       >
         <h2 className="font-extrabold text-4xl text-center md:text-start lg:text-5xl">
-          Kelola Keuangan Bisnis Anda dengan AI
+          { langData[lang].heroSection.title }
         </h2>
         <p className="text-mtext md:text-start">
-          <span className="uppercase font-extrabold">Berjuang</span> dapat membantu mengelola keuangan UMKM dengan bantuan AI supaya menjadi lebih mudah, cepat, dan akurat dengan insight cerdas untuk pertumbuhan bisnis.
+          <span className="uppercase font-extrabold">Berjuang </span>{ langData[lang].heroSection.description }
         </p>
         <Link href="/dashboard">
-          <Button>Menuju Dashboard</Button>
+          <Button>{ langData[lang].heroSection.cta }</Button>
         </Link>
       </motion.div>
 
@@ -49,11 +49,11 @@ const Hero = () => {
           priority
         />
         <div className="absolute top-[20%] right-0 flex flex-col p-4 rounded-md bg-white bg-opacity-40 backdrop-blur-lg border border-white/30 text-black shadow-md">
-          <p className="text-[0.8rem] text-gray-800">Saldo Anda</p>
+          <p className="text-[0.8rem] text-gray-800">{ langData[lang].heroSection.yourBalances }</p>
           <p className="font-bold">Rp 20.000</p>
         </div>
         <div className="absolute top-[60%] left-0 flex flex-col p-4 rounded-md bg-white bg-opacity-40 backdrop-blur-lg border border-white/30 text-black shadow-md">
-          <p className="text-[0.8rem] text-gray-800">Pengeluaran Anda</p> 
+          <p className="text-[0.8rem] text-gray-800">{ langData[lang].heroSection.yourExpenses }</p> 
           <p className="font-bold">Rp 100.000</p> 
         </div>
       </motion.div>

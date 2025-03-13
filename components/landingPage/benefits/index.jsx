@@ -1,3 +1,5 @@
+import langData from '@/lib/lang';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
 import { motion } from 'framer-motion';
 import { MdAttachMoney, MdAccessTime, MdQuestionMark } from 'react-icons/md';
 
@@ -6,18 +8,30 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 1 } },
 };
 
-const benefits = [
-  { icon: <MdAttachMoney size={50} />, title: 'Efisiensi Keuangan', desc: 'Kelola keuangan dengan lebih cepat, mudah, dan akurat untuk meningkatkan stabilitas bisnis.' },
-  { icon: <MdAccessTime size={50} />, title: 'Hemat Waktu & Biaya', desc: 'Kurangi proses manual dengan sistem otomatisasi, sehingga bisnis lebih efisien dan produktif.' },
-  { icon: <MdQuestionMark size={50} />, title: 'Keputusan Tepat', desc: 'Gunakan data akurat untuk analisis dan strategi bisnis yang lebih efektif dan berkelanjutan.' },
-];
-
 const Benefit = () => {
+  const { lang } = useLanguageStore(state => state);
+
+  const benefits = [
+    { icon: <MdAttachMoney size={50} />, title: langData[lang].benefitSection.benefitsTitle[0], desc: langData[lang].benefitSection.benefitsDesc[0] },
+    { icon: <MdAccessTime size={50} />, title:  langData[lang].benefitSection.benefitsTitle[1], desc: langData[lang].benefitSection.benefitsDesc[1] },
+    { icon: <MdQuestionMark size={50} />, title:  langData[lang].benefitSection.benefitsTitle[2], desc: langData[lang].benefitSection.benefitsDesc[2] },
+  ];
+
   return (
     <section id='benefits' className='border-t-4 py-16 px-8 border-border dark:border-darkBorder'>
       <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} viewport={{ once: true }}>
-        <h3 className='text-center text-4xl font-bold'>Manfaat <span className='text-main'>Produk</span></h3>
-        <p className='text-center text-mtext text-lg mt-2'>Apa yang bisa kami lakukan untuk bisnis Anda?</p>
+        <h3 className='text-center text-4xl font-bold'>
+        {lang === "id" ? (
+          <>
+            <span className='text-main'>Manfaat</span> Produk
+          </>
+        ) : (
+          <>
+            Product <span className='text-main'>Benefits</span>
+          </>
+        )}
+        </h3>
+        <p className='text-center text-mtext text-lg mt-2'>{ langData[lang].benefitSection.subTitle }</p>
       </motion.div>
       <div className="grid grid-cols-1 mt-8 md:grid-cols-3 gap-6">
         {benefits.map((item, index) => (
