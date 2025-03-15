@@ -39,6 +39,19 @@ const DashboardSideBar = () => {
             </Button>
           </Link>
         </li>
+        <li>
+          <Link href="/transaction/out">
+            <Button
+              className={`w-full justify-start hover:border hover:bg-neutral-50 ${
+                pathname === '/transaction/out' ? 'bg-white dark:bg-neutral-600 font-bold' : 'bg-transparent border-0'
+              }`}
+              variant='reverse'
+            >
+              <GrTransaction aria-label="Transaction" />
+              Transaction Out
+            </Button>
+          </Link>
+        </li>
       </ul>
     </aside>
   );

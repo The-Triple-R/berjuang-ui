@@ -15,7 +15,7 @@ const transactionData = [
   { id: 6, amount: "Rp 300.000", date: "2025-03-01" },
 ];
 
-export function TableTransaction({ datas = transactionData }) {
+export function TableTransaction({ datas = transactionData, transactionType }) {
   return (
     <div className="flex flex-col gap-4">
       {datas.length > 0 ? (
@@ -23,7 +23,7 @@ export function TableTransaction({ datas = transactionData }) {
           <Table>
             <TableHead>
               <TableHeader>No</TableHeader>
-              <TableHeader>Uang Masuk</TableHeader>
+              <TableHeader>{ transactionType }</TableHeader>
               <TableHeader>Tanggal Masuk</TableHeader>
               <TableHeader colSpan={3}>Aksi</TableHeader>
             </TableHead>
