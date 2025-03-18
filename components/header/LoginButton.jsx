@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '../ui/button';
 import GoogleIcon from '../icons/google-icon';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';

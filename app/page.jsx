@@ -4,6 +4,7 @@ import Hero from '@/components/landingPage/hero';
 import Feature from '@/components/landingPage/features';
 import Benefit from '@/components/landingPage/benefits';
 import Team from '@/components/landingPage/team';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 // const fadeInUp = {
 //   hidden: { opacity: 0, y: 50 },
@@ -11,6 +12,10 @@ import Team from '@/components/landingPage/team';
 // };
 
 export default function Home() {
+  const { isHydrated } = useLanguageStore(state => state);
+
+  if (!isHydrated) return null;
+
   return (
     <LandingLayout>
       <Hero />

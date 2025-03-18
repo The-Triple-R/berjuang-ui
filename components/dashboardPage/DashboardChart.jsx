@@ -29,7 +29,7 @@ const chartConfig = {
 export function DashboardChart() {
   return (
     <div className='flex flex-col gap-4 sm:flex-row'>
-      <Card className='p-5 flex-[4]'>
+      <Card className='p-2 flex-[4] bg-transparent'>
         {/* <CardHeader className='p-1 mb-4'>
           <CardTitle>Grafik Saldo</CardTitle>
         </CardHeader>
