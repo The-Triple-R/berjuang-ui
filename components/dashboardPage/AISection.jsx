@@ -26,7 +26,7 @@ const AISection = () => {
           const groupedMessages = data.data.aiResponses.reduce((acc, msg) => {
             const date = msg.date.split('T')[0];
             if (!acc[date]) acc[date] = [];
-            acc[date].push({ role: 'ai', content: msg.message });
+            acc[date].push({ isAI: true, content: msg.message });
             return acc;
           }, {});
 
@@ -55,7 +55,7 @@ const AISection = () => {
     event.preventDefault();
     if (!input.trim()) return;
 
-    const newMessage = { role: 'user', content: input };
+    const newMessage = { isAI: false, content: input };
     setFilteredMessages((prev) => [...prev, newMessage]);
     setInput('');
     setLoading(true);
@@ -68,7 +68,7 @@ const AISection = () => {
       );
 
       if (data.status === 'success') {
-        setFilteredMessages((prev) => [...prev, { role: 'ai', content: data.data.aiResponse }]);
+        setFilteredMessages((prev) => [...prev, { isAI: true, content: data.data.aiResponse }]);
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -102,10 +102,10 @@ const AISection = () => {
 
       <div className="space-y-3 overflow-y-auto max-h-[400px] p-2 bg-white">
         {filteredMessages.map((msg, index) => (
-          <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={index} className={`flex ${msg.isAI ? 'justify-start' : 'justify-end'}`}>
             <div
               className={`p-3 max-w-xs border-2 md:max-w-md lg:max-w-lg rounded-xl ${
-                msg.role === 'user' ? 'bg-gray-100 text-black border-transparent' : 'border-gray-100'
+                msg.isAI ? 'border-gray-100' : 'bg-gray-100 text-black border-transparent'
               }`}
             >
               <ReactMarkdown>{msg.content}</ReactMarkdown>
