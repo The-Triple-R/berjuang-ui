@@ -1,20 +1,20 @@
+import { formatNumber } from '@/lib/utils';
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function TransactionEntry(props) {
+function TransactionEntry({ transaction }) {
   return (
     <div className='flex justify-between items-center gap-4 text-sm'>
       <div>
-        <p className='font-semibold xl:text-xl 2xl:text-2xl'>Pemasukan</p>
-        <p className='xl:text-lg 2xl:text-xl'>Deskripsi Pemasukan 1</p>
+        <p className='font-semibold xl:text-xl 2xl:text-2xl'>{transaction.transactionType === 'debit' ? 'Pemasukan' : 'Pengeluaran'}</p>
+        <p className='xl:text-lg 2xl:text-xl'>{transaction.description || 'Tidak ada deskripsi'}</p>
       </div>
       <div className='font-semibold'>
-        <p className='text-lg 2xl:text-xl'>+ Rp. 200.000</p>
+        <p className={`text-lg 2xl:text-xl ${transaction.transactionType === 'debit' ? 'text-green-600' : 'text-red-600'}`}>
+          {transaction.transactionType === 'debit' ? '+' : '-'}Rp. {formatNumber(transaction.amount)}
+          </p>
       </div>
     </div>
   );
 }
-
-TransactionEntry.propTypes = {};
 
 export default TransactionEntry;
