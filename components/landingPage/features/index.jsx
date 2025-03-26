@@ -1,3 +1,4 @@
+'use client';
 import { motion } from 'framer-motion';
 import FeatureCard from '@/components/landingPage/features/FeatureCard';
 import { MdAutoAwesome, MdRecommend } from 'react-icons/md';

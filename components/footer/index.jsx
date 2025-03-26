@@ -7,7 +7,7 @@ import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 function Footer() {
   const { lang } = useLanguageStore((state) => state);
-
+  
   return (
     <footer className='font-semibold bg-[#262626] text-footerText pt-16 px-10'>
       <div className='w-[600px] max-w-full mx-auto'>

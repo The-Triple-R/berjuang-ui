@@ -1,3 +1,4 @@
+'use client';
 import langData from '@/lib/lang';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
 import { motion } from 'framer-motion';

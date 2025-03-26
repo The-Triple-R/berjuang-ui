@@ -1,3 +1,4 @@
+'use client';
 import { motion } from 'framer-motion';
 import TeamCard from './TeamCard';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
