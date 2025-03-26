@@ -1,85 +1,134 @@
 'use client';
-import React from 'react';
-
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { Card } from '../ui/card';
+import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 
 const AISection = () => {
-  const [conversations, setConversations] = useState([]);
-  const [currentConversation, setCurrentConversation] = useState({ id: Date.now(), messages: [] });
+  const [messages, setMessages] = useState([]);
+  const [dates, setDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [filteredMessages, setFilteredMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSend = () => {
-    if (input.trim() !== '') {
-      const updatedConversation = {
-        ...currentConversation,
-        messages: [...currentConversation.messages, { text: input, timestamp: new Date().toLocaleTimeString() }],
-      };
+  useEffect(() => {
+    const fetchMessages = async () => {
+      setLoading(true);
+      try {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/ai-responses`, {
+          withCredentials: true,
+        });
 
-      setCurrentConversation(updatedConversation);
-      setConversations((prev) => {
-        const index = prev.findIndex((conv) => conv.id === currentConversation.id);
-        if (index !== -1) {
-          prev[index] = updatedConversation;
-          return [...prev];
+        if (data.status === 'success') {
+          const groupedMessages = data.data.aiResponses.reduce((acc, msg) => {
+            const date = msg.date.split('T')[0];
+            if (!acc[date]) acc[date] = [];
+            acc[date].push({ role: 'ai', content: msg.message });
+            return acc;
+          }, {});
+
+          setMessages(groupedMessages);
+          const uniqueDates = Object.keys(groupedMessages).sort().reverse();
+          setDates(uniqueDates);
+          if (uniqueDates.length > 0) setSelectedDate(uniqueDates[0]);
         }
-        return [...prev, updatedConversation];
-      });
-      setInput('');
+      } catch (error) {
+        console.error('Error fetching AI responses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMessages();
+  }, []);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setFilteredMessages(messages[selectedDate] || []);
+    }
+  }, [selectedDate, messages]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!input.trim()) return;
+
+    const newMessage = { role: 'user', content: input };
+    setFilteredMessages((prev) => [...prev, newMessage]);
+    setInput('');
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/ai-responses`,
+        { message: input },
+        { withCredentials: true }
+      );
+
+      if (data.status === 'success') {
+        setFilteredMessages((prev) => [...prev, { role: 'ai', content: data.data.aiResponse }]);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleNewConversation = () => {
-    const newConv = { id: Date.now(), messages: [] };
-    setCurrentConversation(newConv);
-    setConversations((prev) => [...prev, newConv]);
-  };
-
   return (
-    <div className='mt-4 border-t pt-4 flex gap-4 flex-col-reverse md:flex-row'>
-      <div className='flex-1'>
-        <div className='mb-2 h-64 overflow-y-auto bg-gray-100 p-3 rounded-lg flex flex-col justify-end'>
-          {currentConversation.messages.map((msg, index) => (
-            <div
-              key={index}
-              className='mb-1 p-2 bg-white rounded shadow'
-            >
-              {msg.text} <span className='text-xs text-gray-500'>{msg.timestamp}</span>
-            </div>
-          ))}
-          <div className='mt-2 flex gap-2'>
-            <input
-              className='flex-1 p-2 border rounded'
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder='Type something...'
-            />
-            <Button onClick={handleSend}>Send</Button>
-          </div>
+    <Card className="flex-[4] bg-transparent mt-4">
+      <div className='flex justify-between align-center p-4 border-b-2 border-black'>
+        <div className='flex items-center'>
+          <h3 className="text-lg font-semibold">Tanya AI</h3>
         </div>
-        <Button
-          className='mt-2'
-          onClick={handleNewConversation}
-        >
-          New Conversation
-        </Button>
+
+        <Select value={selectedDate} onValueChange={setSelectedDate}>
+          <SelectTrigger className="w-[200px] bg-transparent border border-gray-300 rounded-md p-2">
+            <SelectValue placeholder="Pilih Tanggal" />
+          </SelectTrigger>
+          <SelectContent className="bg-white border border-gray-300 shadow-md rounded-md">
+            <SelectGroup>
+              {dates.map((date) => (
+                <SelectItem key={date} value={date}>
+                  {date}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
-      <div className='md:border-l md:pl-4 md:w-64 border-b pb-4 md:pb-0 md:border-b-0'>
-        <h3 className='text-lg font-semibold mb-2'>Chat History</h3>
-        {conversations.length < 1 && <p className='text-gray-500'>No conversations yet.</p>}
-        <ul>
-          {conversations.map((conv, index) => (
-            <li
-              key={conv.id}
-              className={`cursor-pointer p-2 rounded ${conv.id === currentConversation.id ? 'bg-gray-300' : 'hover:bg-gray-200'}`}
-              onClick={() => setCurrentConversation(conv)}
+
+      <div className="space-y-3 overflow-y-auto max-h-[400px] p-2 bg-white">
+        {filteredMessages.map((msg, index) => (
+          <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              className={`p-3 max-w-xs border-2 md:max-w-md lg:max-w-lg rounded-xl ${
+                msg.role === 'user' ? 'bg-gray-100 text-black border-transparent' : 'border-gray-100'
+              }`}
             >
-              Conversation {index + 1} ({new Date(conv.id).toLocaleDateString()})
-            </li>
-          ))}
-        </ul>
+              <ReactMarkdown>{msg.content}</ReactMarkdown>
+            </div>
+          </div>
+        ))}
+        {loading && <p className="text-gray-500 text-center">Menunggu respons...</p>}
       </div>
-    </div>
+
+      <form onSubmit={handleSubmit} className="flex gap-2 m-4">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="flex-1 border p-2 rounded-md shadow-sm"
+          placeholder="Ketik pesan..."
+          disabled={loading}
+        />
+        <Button type="submit" disabled={loading}>
+          {loading ? 'Mengirim...' : 'Kirim'}
+        </Button>
+      </form>
+    </Card>
   );
 };
 
