@@ -6,6 +6,8 @@ import { Button } from '../ui/button';
 import { TbEdit } from 'react-icons/tb';
 import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -19,6 +21,8 @@ const AddTransaction = ({ transactionType, paging }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const updateTransactions = useUpdateTransactions();
+
+  const { lang } = useLanguageStore();
 
   const handleSaveChanges = async () => {
     try {
@@ -76,25 +80,27 @@ const AddTransaction = ({ transactionType, paging }) => {
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className='text-xl text-white bg-[#01669E] text-[1rem]' onClick={handleSetDefaultInput}>
-          Tambah
+          {langData[lang].transactionPageTable.add}
           <TbEdit size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>Tambah transaksi</DialogTitle>
-          <DialogDescription>Tambah data transaksi mu. <br></br> Jika sudah klik "Tambah transaksi!" ya!</DialogDescription>
+          <DialogTitle>{langData[lang].transactionPageTable.addPopup.title}</DialogTitle>
+          <DialogDescription>
+            {langData[lang].transactionPageTable.addPopup.description}. <br></br> {langData[lang].transactionPageTable.addPopup.description2}
+          </DialogDescription>
         </DialogHeader>
         <div className='grid gap-4'>
           <div>
             <Label htmlFor='moneyValue' className='block mb-2'>
-              Jumlah Uang
+              {lang === 'id' ? 'Jumlah Uang' : 'Money Value'}
             </Label>
             <Input id='moneyValue' onChange={handleMoneyValueInputChanges} value={moneyValueInput} className='col-span-3' type='text' />
           </div>
           <div className=''>
             <Label htmlFor='description' className='block mb-2'>
-              Deskripsi
+              {lang === 'id' ? 'Deskripsi' : 'Description'}
             </Label>
             <textarea
               onChange={handledescriptionInputChanges}
@@ -106,7 +112,7 @@ const AddTransaction = ({ transactionType, paging }) => {
         </div>
         <DialogFooter>
           <Button onClick={handleSaveChanges} disabled={isLoading}>
-            Tambah transaksi!
+            {lang === 'id' ? 'Tambah Transaksi!' : 'Add Transaction!'}
           </Button>
         </DialogFooter>
       </DialogContent>

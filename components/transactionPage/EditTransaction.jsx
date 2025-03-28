@@ -6,6 +6,8 @@ import { Button } from '../ui/button';
 import { TbEdit } from 'react-icons/tb';
 import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
+import langData from '@/lib/lang';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -19,6 +21,8 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
   const [isLoading, setIsLoading] = useState(false);
 
   const updateTransactions = useUpdateTransactions();
+
+  const { lang } = useLanguageStore();
 
   const handleSaveChanges = async () => {
     try {
@@ -81,21 +85,21 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>Ubah Transaksi</DialogTitle>
+          <DialogTitle>{langData[lang].transactionPageTable.editPopup.title}</DialogTitle>
           <DialogDescription>
-            Ubah data transaksi mu. <br></br> Jika sudah klik "Ubah transaksi!" ya!
+            {langData[lang].transactionPageTable.editPopup.description}. <br></br> {langData[lang].transactionPageTable.editPopup.description2}
           </DialogDescription>
         </DialogHeader>
         <div className='grid gap-4'>
           <div>
             <Label htmlFor='moneyValue' className='block mb-2'>
-              Jumlah Uang
+              {lang === 'id' ? 'Jumlah Uang' : 'Money Value'}
             </Label>
             <Input id='moneyValue' onChange={handleMoneyValueInputChanges} value={moneyValueInput} className='col-span-3' type='text' />
           </div>
           <div className=''>
             <Label htmlFor='description' className='block mb-2'>
-              Description
+              {lang === 'id' ? 'Deskripsi' : 'Description'}
             </Label>
             <textarea
               onChange={handledescriptionInputChanges}
@@ -107,7 +111,7 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
         </div>
         <DialogFooter>
           <Button onClick={handleSaveChanges} disabled={isLoading}>
-            Ubah transaksi!
+            {lang === 'id' ? 'Ubah Transaksi!' : 'Edit Transaction!'}
           </Button>
         </DialogFooter>
       </DialogContent>
