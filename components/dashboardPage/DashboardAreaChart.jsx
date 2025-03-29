@@ -25,7 +25,7 @@ function DashboardAreaChart({ chartData }) {
   const { lang } = useLanguageStore();
 
   return (
-    <Card className='p-2 bg-transparent'>
+    <Card className='p-2 flex-[4] bg-transparent'>
       <CardHeader>
         <CardTitle className='flex justify-between items-center text-xl md:text-2xl font-bold'>
           {langData[lang].dashboardPage.areaChartTitle}
