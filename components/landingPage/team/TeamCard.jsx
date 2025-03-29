@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { FaLinkedin, FaInstagram, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 1 } },
 };
 
-const TeamCard = ({ icon, title, desc, name, role, linkedin, instagram, github }) => {
+const TeamCard = ({ desc, name, role, image, linkedin, instagram, github }) => {
   const cardRef = useRef(null);
   const [isSmall, setIsSmall] = useState(false);
   const [isMedium, setIsMedium] = useState(false);
@@ -46,22 +46,22 @@ const TeamCard = ({ icon, title, desc, name, role, linkedin, instagram, github }
           isSmall
             ? "left-1/2 -translate-x-1/2 top-0 -translate-y-1/2 w-[7rem] h-[7rem] border-4 rounded-full"
             : isMedium
-            ? "left-1/2 -translate-x-1/2 top-[-20%] w-[16rem] h-[10rem] border-2 rounded-md"
+            ? "left-1/2 -translate-x-1/2 top-[-20%] w-[12rem] h-[12rem] border-2 rounded-md"
             : "left-[-5%] top-1/2 -translate-y-1/2 border-2 rounded-md w-[10rem]"
         }`}
       >
         <Image
-          src="/images/people.png"
+          src={image}
           alt="Profile Image"
           width={400}
           height={400}
           className={`object-cover ${
-            isSmall ? "w-[100%] h-auto rounded-full" : isMedium ? "h-[100%] w-auto rounded-md" : "w-[100%] h-auto"
+            isSmall ? "w-[100%] h-auto rounded-full" : isMedium ? "h-[100%] w-auto" : "w-[100%] h-auto"
           }`}
           priority
         />
       </div>
-      <div className={`flex flex-col gap-2 ${isSmall ? "pt-12 items-center text-center" : isMedium ? "pt-[6rem] text-center items-center" : "ml-[9rem]"}`}>
+      <div className={`flex flex-col gap-2 ${isSmall ? "pt-12 items-center text-center" : isMedium ? "pt-[8rem] text-center items-center" : "ml-[9rem]"}`}>
         <div>
           <h3 className="text-lg font-semibold">{name}</h3>
           <p className="text-gray-500">{role}</p>
@@ -70,9 +70,6 @@ const TeamCard = ({ icon, title, desc, name, role, linkedin, instagram, github }
         <div className="flex gap-3 mt-2 text-lg">
           <a href={linkedin} target="_blank" rel="noopener noreferrer">
             <FaLinkedin className="text-blue-600 text-3xl hover:text-blue-800" />
-          </a>
-          <a href={instagram} target="_blank" rel="noopener noreferrer">
-            <FaInstagram className="text-pink-600 text-3xl hover:text-pink-800" />
           </a>
           <a href={github} target="_blank" rel="noopener noreferrer">
             <FaGithub className="text-black text-3xl hover:text-gray-700" />

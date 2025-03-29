@@ -1,4 +1,4 @@
-import { formatNumber } from '@/lib/utils';
+import { formatToRupiah } from '@/lib/utils';
 import React from 'react';
 
 function TransactionEntry({ transaction }) {
@@ -9,9 +9,9 @@ function TransactionEntry({ transaction }) {
         <p className='xl:text-lg 2xl:text-xl'>{transaction.description || 'Tidak ada deskripsi'}</p>
       </div>
       <div className='font-semibold'>
-        <p className={`text-lg 2xl:text-xl ${transaction.transactionType === 'debit' ? 'text-green-600' : 'text-red-600'}`}>
-          {transaction.transactionType === 'debit' ? '+' : '-'}Rp. {formatNumber(transaction.amount)}
-          </p>
+        <p className={`text-lg text-nowrap 2xl:text-xl ${transaction.transactionType === 'debit' ? 'text-green-600' : 'text-red-600'}`}>
+          {transaction.transactionType === 'debit' ? `+${formatToRupiah(transaction.amount)}` : `-${formatToRupiah(transaction.amount)}`}
+        </p>
       </div>
     </div>
   );

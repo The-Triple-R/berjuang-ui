@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,7 @@ const AISection = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [filteredMessages, setFilteredMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [typingMessage, setTypingMessage] = useState('');
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -56,11 +58,12 @@ const AISection = () => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [filteredMessages, loading]);
+  }, [filteredMessages, loading, typingMessage]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setTypingMessage('');
 
     try {
       const { data } = await axios.post(
@@ -71,18 +74,33 @@ const AISection = () => {
 
       if (data.status === 'success') {
         const newDate = new Date().toISOString().split('T')[0];
-        const newMessage = {
-          content: data.data.aiResponse,
-          time: new Date().toLocaleTimeString(),
-        };
+        const responseText = data.data.aiResponse;
+        const sentences = responseText.match(/[^.!?]+[.!?]+/g) || [responseText];
+        let currentText = '';
+        let index = 0;
 
-        setMessages((prev) => {
-          const updatedMessages = { ...prev, [newDate]: [...(prev[newDate] || []), newMessage] };
-          setDates((d) => (d.includes(newDate) ? d : [newDate, ...d]));
-          return updatedMessages;
-        });
+        const typingInterval = setInterval(() => {
+          if (index < sentences.length) {
+            currentText += (index === 0 ? '' : ' ') + sentences[index];
+            setTypingMessage(currentText);
+            index++;
+          } else {
+            clearInterval(typingInterval);
+            const newMessage = {
+              content: responseText,
+              time: new Date().toLocaleTimeString(),
+            };
 
-        setSelectedDate(newDate);
+            setMessages((prev) => {
+              const updatedMessages = { ...prev, [newDate]: [...(prev[newDate] || []), newMessage] };
+              setDates((d) => (d.includes(newDate) ? d : [newDate, ...d]));
+              return updatedMessages;
+            });
+
+            setSelectedDate(newDate);
+            setTypingMessage('');
+          }
+        }, 15);
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -92,9 +110,9 @@ const AISection = () => {
   };
 
   return (
-    <Card className="flex-[4] bg-transparent mt-4">
+    <Card className="flex-[4] bg-transparent">
       <div className='flex justify-between items-center p-4 border-b-2 border-black'>
-        <h3 className="text-lg font-semibold">Tanya AI</h3>
+        <h3 className="text-xl md:text-2xl font-bold">Tanya AI</h3>
         <Select value={selectedDate} onValueChange={setSelectedDate}>
           <SelectTrigger className="bg-transparent w-fit rounded-md p-4">
             <SelectValue placeholder="Pilih Tanggal" />
@@ -109,14 +127,19 @@ const AISection = () => {
         </Select>
       </div>
 
-      <div className="space-y-3 overflow-y-auto max-h-[400px] p-4 bg-white">
+      <div className="space-y-3 overflow-y-auto h-[400px] p-4 bg-white">
         {filteredMessages.map((msg, index) => (
           <div key={index} className="p-3 max-w-3xl border-2 rounded-xl bg-gray-100 text-black border-transparent">
             <ReactMarkdown>{msg.content}</ReactMarkdown>
             <div className="text-xs text-gray-500 mt-1">{msg.time}</div>
           </div>
         ))}
-        {loading && (
+        {typingMessage && (
+          <div className="p-3 max-w-3xl border-2 rounded-xl bg-gray-100 text-black border-transparent animate-pulse">
+            <ReactMarkdown>{typingMessage}</ReactMarkdown>
+          </div>
+        )}
+        {loading && !typingMessage && (
           <div className="p-3 max-w-3xl border-2 rounded-xl bg-gray-200 text-black border-transparent animate-pulse">
             <div className="h-4 bg-gray-300 rounded w-3/4"></div>
             <div className="h-4 bg-gray-300 rounded w-1/2 mt-2"></div>
@@ -127,7 +150,7 @@ const AISection = () => {
       
       <form onSubmit={handleSubmit} className="flex gap-2 border-t-2 border-black p-4 justify-center">
         <Button type="submit" disabled={loading}>
-          {loading ? 'Mengirim...' : 'Minta Rekomendasi AI'}
+          Minta Rekomendasi AI
         </Button>
       </form>
     </Card>

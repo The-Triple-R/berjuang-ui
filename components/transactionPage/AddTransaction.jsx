@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
-import { TbEdit } from 'react-icons/tb';
+import { TbPlus } from 'react-icons/tb';
 import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 
@@ -23,11 +23,10 @@ const AddTransaction = ({ transactionType, paging }) => {
   const handleSaveChanges = async () => {
     try {
       setIsLoading(true);
-      console.log(paging);
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
         {
-          amount: Number(moneyValueInput.replace(/\./g, '')), // convert misal 10.000 menjadi 10000
+          amount: Number(moneyValueInput.replace(/\./g, '')),
           description: descriptionInput,
           transactionType,
         },
@@ -35,9 +34,7 @@ const AddTransaction = ({ transactionType, paging }) => {
           withCredentials: true,
         }
       );
-
       updateTransactions(transactionType, paging.currentPage);
-
       setIsOpen(false);
     } catch (error) {
       console.log(error);
@@ -47,14 +44,11 @@ const AddTransaction = ({ transactionType, paging }) => {
   };
 
   const handleMoneyValueInputChanges = (e) => {
-    let rawValue = e.target.value.replace(/\D/g, ''); // Hanya angka
-
+    let rawValue = e.target.value.replace(/\D/g, '');
     let numericValue = Number(rawValue);
-
     if (numericValue > 1_000_000_000_000) {
       numericValue = 1_000_000_000_000;
     }
-
     setMoneyValueInput(formatRupiah(numericValue.toString()));
   };
 
@@ -67,46 +61,67 @@ const AddTransaction = ({ transactionType, paging }) => {
     setDescriptionInput('');
   };
 
-  const handleOpenChange = () =>
-    setIsOpen((prevState) => {
-      return !prevState;
-    });
+  const handleOpenChange = () => setIsOpen((prevState) => !prevState);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className='text-xl text-white bg-[#01669E] text-[1rem]' onClick={handleSetDefaultInput}>
           Tambah
-          <TbEdit size={24} />
+          <TbPlus size={24} />
         </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='sm:max-w-[450px] rounded-lg shadow-xl p-6'>
         <DialogHeader>
-          <DialogTitle>Tambah transaksi</DialogTitle>
-          <DialogDescription>Tambah data transaksi mu. <br></br> Jika sudah klik "Tambah transaksi!" ya!</DialogDescription>
+          <DialogTitle className='text-lg font-semibold text-gray-800'>Tambah Transaksi</DialogTitle>
+          <DialogDescription className='text-sm text-gray-600 mt-1'>
+            Tambahkan detail transaksi lalu tekan <b>"Tambah transaksi!"</b>
+          </DialogDescription>
         </DialogHeader>
-        <div className='grid gap-4'>
+        <div className='grid gap-4 mt-4'>
           <div>
-            <Label htmlFor='moneyValue' className='block mb-2'>
+            <Label htmlFor='moneyValue' className='text-sm font-medium text-gray-700'>
               Jumlah Uang
             </Label>
-            <Input id='moneyValue' onChange={handleMoneyValueInputChanges} value={moneyValueInput} className='col-span-3' type='text' />
+            <Input 
+              id='moneyValue' 
+              onChange={handleMoneyValueInputChanges} 
+              value={moneyValueInput} 
+              className='mt-2 w-full px-4 py-2 border border-gray-300 rounded-md text-gray-800 focus:ring-2 focus:ring-[#4D4FED] focus:outline-none transition-all'
+              type='text' 
+              placeholder='Masukkan jumlah uang'
+            />
           </div>
-          <div className=''>
-            <Label htmlFor='description' className='block mb-2'>
+          <div>
+            <Label htmlFor='description' className='text-sm font-medium text-gray-700'>
               Deskripsi
             </Label>
             <textarea
               onChange={handledescriptionInputChanges}
-              defaultValue={descriptionInput}
-              className='w-full rounded-base border-2 text-text font-base selection:bg-main selection:text-mtext border-border bg-bw px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 '
+              value={descriptionInput}
+              className='w-full mt-2 px-4 py-2 border border-gray-300 rounded-md text-gray-800 focus:ring-2 focus:ring-[#4D4FED] focus:outline-none transition-all resize-none h-24 placeholder-gray-400'
               id='description'
+              placeholder='Tambahkan deskripsi transaksi'
             />
           </div>
         </div>
-        <DialogFooter>
-          <Button onClick={handleSaveChanges} disabled={isLoading}>
-            Tambah transaksi!
+        <DialogFooter className='flex justify-between items-center mt-6'>
+          <Button 
+            onClick={() => setIsOpen(false)} 
+            className='bg-gray-300 text-gray-800 font-semibold px-5 py-2 rounded-md transition-all'
+          >
+            Batal
+          </Button>
+          <Button 
+            onClick={handleSaveChanges} 
+            disabled={isLoading}
+            className={`px-5 py-2 rounded-md font-semibold transition-all ${
+              isLoading 
+                ? 'opacity-50 cursor-not-allowed' 
+                : 'shadow-md'
+            }`}
+          >
+            {isLoading ? 'Menyimpan...' : 'Tambah transaksi!'}
           </Button>
         </DialogFooter>
       </DialogContent>

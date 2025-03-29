@@ -30,9 +30,9 @@ function DashboardAreaChart({ chartData }) {
   const finalChartData = chartData.filter((item) => item.year == selectedYear);
 
   return (
-    <Card className='p-2 flex-[4] bg-transparent'>
+    <Card className='p-2 bg-transparent'>
       <CardHeader>
-        <CardTitle className='flex justify-between items-center'>
+        <CardTitle className='flex justify-between items-center text-xl md:text-2xl font-bold'>
           Area Chart Saldo
           <SelectYear yearsData={yearsData} selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
         </CardTitle>

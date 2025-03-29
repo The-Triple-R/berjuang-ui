@@ -11,7 +11,7 @@ import { Card } from '../ui/card';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ onOpenHandler }) => {
   const { user, setIsLogin, setUser } = useUserStore((state) => state);
   const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
   
@@ -47,10 +47,11 @@ const DashboardHeader = () => {
   };
 
   return (
-    <header>
-      <div className='bg-neutral-100 flex justify-between px-4 py-3 border-b border-border lg:flex-row-reverse'>
+    <header className='sticky w-full z-999 top-0 left-0 bg-neutral-100'>
+      <div className='flex justify-between px-4 py-3 border-b border-border lg:flex-row-reverse'>
         <div className='lg:hidden'>
           <Button
+            onClick={onOpenHandler}
             className='rounded-full bg-white w-10 border'
             variant='reverse'
           >
@@ -63,7 +64,6 @@ const DashboardHeader = () => {
             variant='reverse'
           >
             <MdDarkMode />
-            {/* <MdLightMode /> */}
           </Button>
           <Button
             className='rounded-full bg-white w-12 h-12 border '

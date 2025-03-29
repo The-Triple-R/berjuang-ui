@@ -8,10 +8,11 @@ import TableHead from '../tables/TableHead';
 import TableHeader from '../tables/TableHeader';
 import { Button } from '../ui/button';
 import axios from 'axios';
-import { formatDate, formatNumber } from '@/lib/utils';
+import { formatDate, formatToRupiah } from '@/lib/utils';
 
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 import EditTransaction from './EditTransaction';
+import ViewTransaction from './ViewTransaction';
 
 export function TableTransaction({ datas, paging, transactionType, mainHeader }) {
   const updateTransactions = useUpdateTransactions();
@@ -58,15 +59,14 @@ export function TableTransaction({ datas, paging, transactionType, mainHeader })
                 <tr key={data.id} className='border-b border-gray-300 last:border-b-0'>
                   <TableData className='font-bold px-1 w-[20px] text-[#8C8CA1]'>{(currentPage - 1) * paging?.size + (index + 1)}</TableData>
                   <TableData className='text-nowrap'>
-                    {transactionType === 'debit' ? '+' : '-'}Rp. {formatNumber(data.amount)}
+                    {transactionType === 'debit' ? '+' : '-'}{formatToRupiah(data.amount)}
                   </TableData>
-                  <TableData className='font-bold px-1 w-[20px] text-[#8C8CA1]'>{data.description || '-'}</TableData>
+                  <TableData className='font-bold px-1 w-[150px] text-[#8C8CA1] text-nowrap'>
+                    {data.description?.length > 20 ? `${data.description.substring(0, 20)}...` : data.description || '-'}
+                  </TableData>
                   <TableData>{formatDate(data.date)}</TableData>
                   <TableData className='px-1 w-[111px]'>
-                    <Button className='text-xl text-white bg-[#33D1AB] text-[1rem]'>
-                      Detail
-                      <TbSearch size={24} />
-                    </Button>
+                    <ViewTransaction amount={data.amount} description={data.description} transactionType={transactionType} date={data.date} />
                   </TableData>
                   <TableData className='px-1 w-[96px]'>
                     <EditTransaction amount={data.amount} description={data.description} id={data.id} transactionType={transactionType} currentPage={currentPage} />

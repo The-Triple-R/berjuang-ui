@@ -14,34 +14,28 @@ const Team = () => {
 
   const teamMembers = [
     { 
-      icon: "/icons/project-manager.svg",
-      title: "Project Manager", 
       desc: langData[lang].developerSection.projectManagerJobDesk,
-      name: "Jill Scott",
-      role: "Project Manager",
-      image: "/images/project-manager.jpg",
+      name: "Sava Reyhano",
+      role: "Backend Developer",
+      image: "/images/Sava.jpg",
       linkedin: "https://linkedin.com/in/jillscott",
       instagram: "https://instagram.com/jillscott",
       github: "https://github.com/jillscott"
     },
-    { 
-      icon: "/icons/frontend-developer.svg",
-      title: "Frontend Developer", 
+    {
       desc: langData[lang].developerSection.frontendJobDesk,
-      name: "Alex Johnson",
+      name: "Fariz",
       role: "Frontend Developer",
-      image: "/images/frontend-developer.jpg",
+      image: "/images/Fariz.jpg",
       linkedin: "https://linkedin.com/in/alexjohnson",
       instagram: "https://instagram.com/alexjohnson",
       github: "https://github.com/alexjohnson"
     },
     { 
-      icon: "/icons/backend-developer.svg",
-      title: "Backend Developer", 
       desc: langData[lang].developerSection.backendJobDesk,
-      name: "Michael Smith",
-      role: "Backend Developer",
-      image: "/images/backend-developer.jpg",
+      name: "Ryan Bagus B",
+      role: "Frontend Developer",
+      image: "/images/Ryan.png",
       linkedin: "https://linkedin.com/in/michaelsmith",
       instagram: "https://instagram.com/michaelsmith",
       github: "https://github.com/michaelsmith"
@@ -68,11 +62,10 @@ const Team = () => {
       <div className="grid mt-2 grid-cols-1 md:grid-cols-3 gap-6">
         {teamMembers.map((member, index) => (
           <TeamCard 
-            key={index} 
-            icon={member.icon} 
-            title={member.title} 
+            key={index}
             desc={member.desc} 
             name={member.name} 
+            image={member.image} 
             role={member.role} 
             linkedin={member.linkedin} 
             instagram={member.instagram} 

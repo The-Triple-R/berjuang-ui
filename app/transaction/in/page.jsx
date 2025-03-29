@@ -22,15 +22,10 @@ const TransactionIn = () => {
     <DashboardLayout>
       <div className='flex flex-col gap-4 px-4 py-3'>
         <Heading title='Data Transaksi Pemasukan' subTitle='Data pemasukan uang'>
-          {/* <Button className='bg-[#01669E] text-white' onClick={openPopup}>
-            Tambah
-            <BsPlusCircle />
-          </Button> */}
           <AddTransaction transactionType='debit' paging={paginationTransactionsIn} />
         </Heading>
         <TableTransaction datas={transactionsIn} paging={paginationTransactionsIn} mainHeader='Uang Masuk' transactionType='debit' />
       </div>
-      {/* <TransactionPopup isOpen={isOpen} onClose={closePopup} transactionType='debit' paging={paginationTransactionsIn} /> */}
     </DashboardLayout>
   );
 };

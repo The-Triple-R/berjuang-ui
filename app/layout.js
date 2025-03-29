@@ -8,7 +8,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
-  title: 'BerjUANG',
+  title: 'Berjuang',
   description: 'Solusi Cerdas untuk Keuangan UMKM Anda!',
 };
 

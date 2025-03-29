@@ -36,18 +36,18 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 flex md:grid md:grid-cols-[1fr,auto,1fr] items-center w-full border-b-4 border-border dark:border-darkNavBorder bg-white dark:bg-secondaryBlack p-4 md:py-2 md:px-8 justify-between">
-      <h1 className="uppercase font-extrabold text-xl md:text-2xl text-mtext">
+    <header className="sticky top-0 z-20 flex lg:grid lg:grid-cols-[1fr,auto,1fr] items-center w-full border-b-4 border-border dark:border-darkNavBorder bg-white dark:bg-secondaryBlack p-4 lg:py-2 ld:px-8 justify-between">
+      <h1 className="uppercase font-extrabold text-xl lg:text-2xl text-mtext">
         berj<span className="text-main">uang</span>
       </h1>
-      <nav className={`absolute md:static top-full ${isMenuOpen ? "left-0 opacity-100" : "left-[-100%] opacity-0"} md:opacity-100 bg-white dark:bg-secondaryBlack border-t-4 md:border-none border-border dark:border-darkNavBorder transition-all duration-300 w-full`}>
-        <ul className="flex flex-col md:flex-row">
+      <nav className={`absolute lg:static top-full ${isMenuOpen ? "left-0 opacity-100" : "left-[-100%] opacity-0"} lg:opacity-100 bg-white dark:bg-secondaryBlack border-t-4 lg:border-none border-border dark:border-darkNavBorder transition-all duration-300 w-full`}>
+        <ul className="flex flex-col lg:flex-row">
           {["home", "features", "benefits", "team"].map((section) => (
             <MenuItem key={section} href={`#${section}`} isActive={activeSection === section}>
               {langData[lang].navbarLandingPage[section]}
             </MenuItem>
           ))}
-          <li className="md:hidden border-b-2 border-mtext flex justify-center px-4 py-3">
+          <li className="lg:hidden border-b-2 border-mtext flex justify-center px-4 py-3">
             <LoginButton />
           </li>
         </ul>
@@ -56,12 +56,12 @@ const Header = () => {
         <div className="lang-menu">
           <LanguageMenu isOpen={isLangMenuOpen} toggle={() => setIsLangMenuOpen(!isLangMenuOpen)} setLang={setLang} />
         </div>
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <LoginButton />
         </div>
         <Button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="rounded-full bg-white w-10 md:hidden transition-all duration-300"
+          className="rounded-full bg-white w-10 lg:hidden transition-all duration-300"
           style={{ transform: isMenuOpen ? "rotate(360deg)" : "rotate(0deg)" }}
         >
           {isMenuOpen ? <FaX /> : <FaBars />}
