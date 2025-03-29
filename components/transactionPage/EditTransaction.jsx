@@ -6,6 +6,8 @@ import { Button } from '../ui/button';
 import { TbEdit } from 'react-icons/tb';
 import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
+import langData from '@/lib/lang';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -19,6 +21,8 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
   const [isLoading, setIsLoading] = useState(false);
 
   const updateTransactions = useUpdateTransactions();
+
+  const { lang } = useLanguageStore();
 
   const handleSaveChanges = async () => {
     try {
@@ -79,13 +83,13 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
         <DialogHeader>
           <DialogTitle className='text-lg font-semibold text-gray-800'>Ubah Transaksi</DialogTitle>
           <DialogDescription className='text-sm text-gray-600 mt-1'>
-            Silakan ubah detail transaksi lalu tekan <b>"Ubah transaksi!"</b>
+          {langData[lang].transactionPageTable.editPopup.description} <b>{langData[lang].transactionPageTable.editPopup.description2}</b>
           </DialogDescription>
         </DialogHeader>
         <div className='grid gap-4 mt-4'>
           <div>
             <Label htmlFor='moneyValue' className='text-sm font-medium text-gray-700'>
-              Jumlah Uang
+              {lang === 'id' ? 'Jumlah Uang' : 'Money Value'}
             </Label>
             <Input 
               id='moneyValue' 
@@ -93,19 +97,19 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
               value={moneyValueInput} 
               className='mt-2 w-full px-4 py-2 border border-gray-300 rounded-md text-gray-800 focus:ring-2 focus:ring-[#4D4FED] focus:outline-none transition-all'
               type='text' 
-              placeholder='Masukkan jumlah uang'
+              placeholder={lang === 'id' ? 'Edit jumlah uang' : 'Edit money value'}
             />
           </div>
-          <div>
+          <div className=''>
             <Label htmlFor='description' className='text-sm font-medium text-gray-700'>
-              Deskripsi
+              {lang === 'id' ? 'Deskripsi' : 'Description'}
             </Label>
             <textarea
               onChange={handledescriptionInputChanges}
               value={descriptionInput}
               className='w-full mt-2 px-4 py-2 border border-gray-300 rounded-md text-gray-800 focus:ring-2 focus:ring-[#4D4FED] focus:outline-none transition-all resize-none h-24 placeholder-gray-400'
               id='description'
-              placeholder='Tambahkan deskripsi transaksi'
+              placeholder={lang === 'id' ? 'Edit deskripsi transaksi' : 'Edit transaction description'}
             />
           </div>
         </div>
@@ -114,7 +118,7 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
             onClick={() => setIsOpen(false)} 
             className="bg-gray-300 text-gray-800 font-semibold px-5 py-2 rounded-md transition-all"
           >
-            Batal
+            {lang === 'id' ? 'Batal' : 'Cancel'}
           </Button>
           <Button 
             onClick={handleSaveChanges} 
@@ -125,7 +129,7 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
                 : 'shadow-md'
             }`}
           >
-            {isLoading ? 'Menyimpan...' : 'Ubah transaksi!'}
+            {isLoading ? lang === 'id' ? 'Menyimpan!' : 'Processing...' : lang === 'id' ? 'Ubah Transaksi!' : 'Edit Transaction!'}
           </Button>
         </DialogFooter>
       </DialogContent>

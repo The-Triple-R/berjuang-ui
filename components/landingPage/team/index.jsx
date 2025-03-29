@@ -14,31 +14,28 @@ const Team = () => {
 
   const teamMembers = [
     { 
-      desc: langData[lang].developerSection.projectManagerJobDesk,
+      desc: langData[lang].developerSection.backendJobDesk,
       name: "Sava Reyhano",
       role: "Backend Developer",
       image: "/images/Sava.jpg",
-      linkedin: "https://linkedin.com/in/jillscott",
-      instagram: "https://instagram.com/jillscott",
-      github: "https://github.com/jillscott"
+      linkedin: "https://www.linkedin.com/in/savareyhano/",
+      github: "https://github.com/savareyhano"
     },
     {
-      desc: langData[lang].developerSection.frontendJobDesk,
-      name: "Fariz",
+      desc: langData[lang].developerSection.frontendJobDesk1,
+      name: "Fariz Rifky Berliano",
       role: "Frontend Developer",
       image: "/images/Fariz.jpg",
-      linkedin: "https://linkedin.com/in/alexjohnson",
-      instagram: "https://instagram.com/alexjohnson",
-      github: "https://github.com/alexjohnson"
+      linkedin: "https://www.linkedin.com/in/farizrifkyberliano/",
+      github: "https://github.com/ifarbie"
     },
     { 
-      desc: langData[lang].developerSection.backendJobDesk,
-      name: "Ryan Bagus B",
+      desc: langData[lang].developerSection.frontendJobDesk2,
+      name: "Ryan Bagus Bimantoro",
       role: "Frontend Developer",
       image: "/images/Ryan.png",
-      linkedin: "https://linkedin.com/in/michaelsmith",
-      instagram: "https://instagram.com/michaelsmith",
-      github: "https://github.com/michaelsmith"
+      linkedin: "https://www.linkedin.com/in/ryanbagusb/",
+      github: "https://github.com/RyanBagusB"
     }
   ];
 
@@ -68,7 +65,6 @@ const Team = () => {
             image={member.image} 
             role={member.role} 
             linkedin={member.linkedin} 
-            instagram={member.instagram} 
             github={member.github} 
           />
         ))}

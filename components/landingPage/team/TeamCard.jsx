@@ -8,7 +8,7 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 1 } },
 };
 
-const TeamCard = ({ desc, name, role, image, linkedin, instagram, github }) => {
+const TeamCard = ({ desc, name, role, image, linkedin, github }) => {
   const cardRef = useRef(null);
   const [isSmall, setIsSmall] = useState(false);
   const [isMedium, setIsMedium] = useState(false);

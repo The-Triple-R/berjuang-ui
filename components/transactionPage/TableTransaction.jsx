@@ -1,6 +1,4 @@
 'use client';
-
-import { TbSearch } from 'react-icons/tb';
 import { MdOutlineCancel } from 'react-icons/md';
 import Table from '../tables/Table';
 import TableData from '../tables/TableData';
@@ -13,9 +11,13 @@ import { formatDate, formatToRupiah } from '@/lib/utils';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 import EditTransaction from './EditTransaction';
 import ViewTransaction from './ViewTransaction';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 export function TableTransaction({ datas, paging, transactionType, mainHeader }) {
   const updateTransactions = useUpdateTransactions();
+
+  const { lang } = useLanguageStore();
 
   const totalPaging = paging?.totalPage ?? 0;
   const currentPage = paging?.currentPage ?? 0;
@@ -50,9 +52,9 @@ export function TableTransaction({ datas, paging, transactionType, mainHeader })
             <TableHead>
               <TableHeader>No</TableHeader>
               <TableHeader>{mainHeader}</TableHeader>
-              <TableHeader>Deskripsi</TableHeader>
-              <TableHeader>Tanggal Masuk</TableHeader>
-              <TableHeader colSpan={3}>Aksi</TableHeader>
+              <TableHeader>{langData[lang].transactionPageTable.description}</TableHeader>
+              <TableHeader>{langData[lang].transactionPageTable.date}</TableHeader>
+              <TableHeader colSpan={3}>{langData[lang].transactionPageTable.action}</TableHeader>
             </TableHead>
             <tbody>
               {datas.map((data, index) => (
@@ -73,7 +75,7 @@ export function TableTransaction({ datas, paging, transactionType, mainHeader })
                   </TableData>
                   <TableData className='pl-1 pr-3 w-[115px]'>
                     <Button className='text-xl text-white bg-[#D30368] text-[1rem]' onClick={() => handleDelete(data.id)}>
-                      Hapus
+                    {langData[lang].transactionPageTable.delete}
                       <MdOutlineCancel size={24} />
                     </Button>
                   </TableData>
@@ -97,7 +99,7 @@ export function TableTransaction({ datas, paging, transactionType, mainHeader })
           </div>
         </>
       ) : (
-        <p className='text-center text-gray-500 mt-4'>Tidak ada data.</p>
+        <p className='text-center text-gray-500 mt-4'>{langData[lang].noData}</p>
       )}
     </div>
   );

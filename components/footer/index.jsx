@@ -7,30 +7,39 @@ import useLanguageStore from '@/lib/zustand/useLanguageStore';
 
 function Footer() {
   const { lang } = useLanguageStore((state) => state);
-  
+  const pages = [
+    { id: 'home', label: langData[lang].navbarLandingPage.home },
+    { id: 'features', label: langData[lang].navbarLandingPage.features },
+    { id: 'benefits', label: langData[lang].navbarLandingPage.benefits },
+    { id: 'team', label: langData[lang].navbarLandingPage.team },
+  ];
+
   return (
-    <footer className='font-semibold bg-[#262626] text-footerText pt-16 px-10'>
-      <div className='w-[600px] max-w-full mx-auto'>
-        <div className='grid grid-cols-3 gap-5 text-xl border-b border-[#ffffff13] pb-16'>
-          <div className='col-span-2'>
-            <h3>
-              <Badge className='font-bold text-xl mb-4'>BERJUANG</Badge>
-            </h3>
-            <div className='flex text-2xl gap-2'>
+    <footer className="bg-[#262626] text-footerText py-6 px-5">
+      <div className="container mx-auto max-w-2xl">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-[#ffffff13] pb-8">
+          <div className="flex flex-col items-center sm:items-start gap-4">
+            <Badge className="font-bold text-lg">BERJUANG</Badge>
+            <div className="flex gap-3 text-2xl">
               <FaFacebookF />
               <FaInstagram />
               <FaSquareXTwitter />
             </div>
           </div>
-          <div className='flex flex-col gap-2'>
-            <h5 className='mb-3 text-bg'>{langData[lang].footerSection.pagesHeader}</h5>
-            <a href='#home'>{langData[lang].navbarLandingPage.home}</a>
-            <a href='#features'>{langData[lang].navbarLandingPage.features}</a>
-            <a href='#benefits'>{langData[lang].navbarLandingPage.benefits}</a>
-            <a href='#team'>{langData[lang].navbarLandingPage.team}</a>
+
+          <div className="sm:col-span-2 flex justify-center sm:justify-end">
+            <div className="flex flex-col gap-2 text-center sm:text-left">
+              <h5 className="mb-2 text-bg">{langData[lang].footerSection.pagesHeader}</h5>
+              {pages.map((page) => (
+                <a key={page.id} href={`#${page.id}`} className="hover:text-white transition">
+                  {page.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-        <p className='text-center py-7 font-base'>{langData[lang].footerSection.copyright}</p>
+
+        <p className="text-center pt-5 text-sm">{langData[lang].footerSection.copyright}</p>
       </div>
     </footer>
   );

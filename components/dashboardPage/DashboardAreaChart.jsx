@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import SelectYear from './SelectYear';
 import { useState } from 'react';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 const chartConfig = {
   amount: {
@@ -13,15 +15,6 @@ const chartConfig = {
   },
 };
 
-const dummyChartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-];
-
 function DashboardAreaChart({ chartData }) {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
@@ -29,14 +22,16 @@ function DashboardAreaChart({ chartData }) {
 
   const finalChartData = chartData.filter((item) => item.year == selectedYear);
 
+  const { lang } = useLanguageStore();
+
   return (
     <Card className='p-2 bg-transparent'>
       <CardHeader>
         <CardTitle className='flex justify-between items-center text-xl md:text-2xl font-bold'>
-          Area Chart Saldo
+          {langData[lang].dashboardPage.areaChartTitle}
           <SelectYear yearsData={yearsData} selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
         </CardTitle>
-        <CardDescription>Memperlihatkan perkembangan saldo selama satu tahun terakhir</CardDescription>
+        <CardDescription>{langData[lang].dashboardPage.areaChartDesc}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

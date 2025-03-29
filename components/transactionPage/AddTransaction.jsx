@@ -3,9 +3,11 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
-import { TbPlus } from 'react-icons/tb';
 import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
+import { BsPlusCircle } from 'react-icons/bs';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -19,6 +21,8 @@ const AddTransaction = ({ transactionType, paging }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const updateTransactions = useUpdateTransactions();
+
+  const { lang } = useLanguageStore();
 
   const handleSaveChanges = async () => {
     try {
@@ -67,21 +71,21 @@ const AddTransaction = ({ transactionType, paging }) => {
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className='text-xl text-white bg-[#01669E] text-[1rem]' onClick={handleSetDefaultInput}>
-          Tambah
-          <TbPlus size={24} />
+          {langData[lang].transactionPageTable.add}
+          <BsPlusCircle size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[450px] rounded-lg shadow-xl p-6'>
         <DialogHeader>
-          <DialogTitle className='text-lg font-semibold text-gray-800'>Tambah Transaksi</DialogTitle>
+          <DialogTitle className='text-lg font-semibold text-gray-800'>{langData[lang].transactionPageTable.addPopup.title}</DialogTitle>
           <DialogDescription className='text-sm text-gray-600 mt-1'>
-            Tambahkan detail transaksi lalu tekan <b>"Tambah transaksi!"</b>
+          {langData[lang].transactionPageTable.addPopup.description} <b>{langData[lang].transactionPageTable.addPopup.description2}</b>
           </DialogDescription>
         </DialogHeader>
         <div className='grid gap-4 mt-4'>
           <div>
             <Label htmlFor='moneyValue' className='text-sm font-medium text-gray-700'>
-              Jumlah Uang
+              {lang === 'id' ? 'Jumlah Uang' : 'Money Value'}
             </Label>
             <Input 
               id='moneyValue' 
@@ -89,19 +93,19 @@ const AddTransaction = ({ transactionType, paging }) => {
               value={moneyValueInput} 
               className='mt-2 w-full px-4 py-2 border border-gray-300 rounded-md text-gray-800 focus:ring-2 focus:ring-[#4D4FED] focus:outline-none transition-all'
               type='text' 
-              placeholder='Masukkan jumlah uang'
+              placeholder={lang === 'id' ? 'Masukkan jumlah uang' : 'Enter money value'}
             />
           </div>
           <div>
             <Label htmlFor='description' className='text-sm font-medium text-gray-700'>
-              Deskripsi
+              {lang === 'id' ? 'Deskripsi' : 'Description'}
             </Label>
             <textarea
               onChange={handledescriptionInputChanges}
               value={descriptionInput}
               className='w-full mt-2 px-4 py-2 border border-gray-300 rounded-md text-gray-800 focus:ring-2 focus:ring-[#4D4FED] focus:outline-none transition-all resize-none h-24 placeholder-gray-400'
               id='description'
-              placeholder='Tambahkan deskripsi transaksi'
+              placeholder={lang === 'id' ? 'Tambahkan deskripsi transaksi' : 'Add transaction description'}
             />
           </div>
         </div>
@@ -110,7 +114,7 @@ const AddTransaction = ({ transactionType, paging }) => {
             onClick={() => setIsOpen(false)} 
             className='bg-gray-300 text-gray-800 font-semibold px-5 py-2 rounded-md transition-all'
           >
-            Batal
+            {lang === 'id' ? 'Batal' : 'Cancel'}
           </Button>
           <Button 
             onClick={handleSaveChanges} 
@@ -121,7 +125,7 @@ const AddTransaction = ({ transactionType, paging }) => {
                 : 'shadow-md'
             }`}
           >
-            {isLoading ? 'Menyimpan...' : 'Tambah transaksi!'}
+            {isLoading ? lang === 'id' ? 'Menyimpan!' : 'Processing...' : lang === 'id' ? 'Tambah Transaksi!' : 'Add Transaction!'}
           </Button>
         </DialogFooter>
       </DialogContent>

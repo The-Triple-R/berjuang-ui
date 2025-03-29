@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '../ui/card';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 const AISection = () => {
   const [messages, setMessages] = useState({});
@@ -15,6 +17,8 @@ const AISection = () => {
   const [loading, setLoading] = useState(false);
   const [typingMessage, setTypingMessage] = useState('');
   const messagesEndRef = useRef(null);
+
+  const { lang } = useLanguageStore();
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -112,7 +116,7 @@ const AISection = () => {
   return (
     <Card className="flex-[4] bg-transparent">
       <div className='flex justify-between items-center p-4 border-b-2 border-black'>
-        <h3 className="text-xl md:text-2xl font-bold">Tanya AI</h3>
+        <h3 className="text-xl md:text-2xl font-bold">{langData[lang].dashboardPage.askAI}</h3>
         <Select value={selectedDate} onValueChange={setSelectedDate}>
           <SelectTrigger className="bg-transparent w-fit rounded-md p-4">
             <SelectValue placeholder="Pilih Tanggal" />
@@ -150,7 +154,7 @@ const AISection = () => {
       
       <form onSubmit={handleSubmit} className="flex gap-2 border-t-2 border-black p-4 justify-center">
         <Button type="submit" disabled={loading}>
-          Minta Rekomendasi AI
+          {langData[lang].dashboardPage.AIButton}
         </Button>
       </form>
     </Card>
