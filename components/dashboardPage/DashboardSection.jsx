@@ -8,13 +8,14 @@ import useLanguageStore from '@/lib/zustand/useLanguageStore';
 import langData from '@/lib/lang';
 
 const DashboardSection = () => {
+  const [userFinanceRawData, setUserFinanceRawData] = useState(null);
   const [userFinanceStats, setUserFinanceStats] = useState([]);
   const [latestTransactionsHistory, setLatestTransactionsHistory] = useState([]);
   const [chartData, setChartData] = useState([]);
 
   const { lang } = useLanguageStore();
 
-  const financeStatsFunc = (balances, debit, credit) => {
+  const formatFinanceStats = (balances, debit, credit) => {
     return [
       {
         title: langData[lang].dashboardPage.balances,
@@ -28,28 +29,36 @@ const DashboardSection = () => {
         textColorClass: 'text-green-600',
       },
       {
-        title:  langData[lang].dashboardPage.totalTransactionOut,
+        title: langData[lang].dashboardPage.totalTransactionOut,
         value: credit,
         textColorClass: 'text-red-600',
       },
     ];
   };
 
+  const fetchDataTransaction = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/financial-report`, { withCredentials: true });
+
+      setUserFinanceRawData(data.data);
+      setLatestTransactionsHistory(userFinance.transactions.latestTransactionsHistory);
+      setChartData(userFinance.balance.latestBalancesHistory);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchDataTransaction = async () => {
-      try {
-        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/financial-report`, { withCredentials: true });
-        const userFinance = data.data;
-        const financeStats = financeStatsFunc(userFinance.balance.currentAmount, userFinance.transactions.debit, userFinance.transactions.credit);
-
-        setUserFinanceStats(financeStats);
-        setLatestTransactionsHistory(userFinance.transactions.latestTransactionsHistory);
-        setChartData(userFinance.balance.latestBalancesHistory);
-      } catch (error) {}
-    };
-
     fetchDataTransaction();
-  }, [lang]);
+  }, []);
+
+  useEffect(() => {
+    if (userFinanceRawData) {
+      setUserFinanceStats(formatFinanceStats(userFinanceRawData.balance.currentAmount, userFinanceRawData.transactions.debit, userFinanceRawData.transactions.credit));
+    }
+  }, [lang, userFinanceRawData]);
+
+  console.log(userFinanceRawData)
 
   return (
     <div className='flex-1'>
