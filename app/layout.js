@@ -1,4 +1,4 @@
-import { Playfair_Display, DM_Sans, Poppins, Geist_Mono } from 'next/font/google';
+import { DM_Sans } from 'next/font/google';
 import PropTypes from 'prop-types';
 import './globals.css';
 
@@ -8,8 +8,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
-  title: 'BerjUANG',
-  description: 'Solusi Cerdas untuk Keuangan UMKM Anda',
+  title: 'Berjuang',
+  description: 'Solusi Cerdas untuk Keuangan UMKM Anda!',
 };
 
 export default function RootLayout({ children }) {
