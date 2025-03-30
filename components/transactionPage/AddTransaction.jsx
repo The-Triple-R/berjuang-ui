@@ -8,6 +8,8 @@ import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
 import langData from '@/lib/lang';
 import { BsPlusCircle } from 'react-icons/bs';
+import toast from 'react-hot-toast';
+import toastConfig from '@/lib/react-hot-toast/toastConfig';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -40,8 +42,10 @@ const AddTransaction = ({ transactionType, paging }) => {
       );
       updateTransactions(transactionType, paging.currentPage);
       setIsOpen(false);
+
+      toast.success(langData[lang].toast.successAdd, toastConfig);
     } catch (error) {
-      console.log(error);
+      if (transactionType === 'credit') toast.error(langData[lang].toast.errorAddCredit, toastConfig);
     } finally {
       setIsLoading(false);
     }
