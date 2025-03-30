@@ -8,6 +8,8 @@ import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 import langData from '@/lib/lang';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import toast from 'react-hot-toast';
+import toastConfig from '@/lib/react-hot-toast/toastConfig';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -42,8 +44,10 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
       updateTransactions(transactionType, currentPage);
 
       setIsOpen(false);
+
+      toast.success(langData[lang].toast.successUpdate, toastConfig);
     } catch (error) {
-      console.log(error);
+      toast.error(langData[lang].toast.errorUpdate, toastConfig);
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +79,7 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className='text-xl text-white bg-[#4D4FED] text-[1rem]' onClick={handleSetDefaultInput}>
-          Edit
+          {lang == "id" ? "Ubah" : "Edit"}
           <TbEdit size={24} />
         </Button>
       </DialogTrigger>
@@ -122,7 +126,7 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
           </Button>
           <Button 
             onClick={handleSaveChanges} 
-            disabled={isLoading}
+            disabled={isLoading || moneyValueInput < 1}
             className={`px-5 py-2 rounded-md font-semibold transition-all ${
               isLoading 
                 ? 'opacity-50 cursor-not-allowed' 

@@ -7,12 +7,14 @@ import langData from "@/lib/lang";
 import MenuItem from "./MenuItem";
 import LanguageMenu from "./LanguageMenu";
 import LoginButton from "./LoginButton";
+import useUserStore from "@/lib/zustand/useUserStore";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const { lang, setLang } = useLanguageStore();
+  const { isLogin } = useUserStore((state) => state);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -47,18 +49,22 @@ const Header = () => {
               {langData[lang].navbarLandingPage[section]}
             </MenuItem>
           ))}
-          <li className="lg:hidden border-b-2 border-mtext flex justify-center px-4 py-3">
-            <LoginButton />
-          </li>
+          {!isLogin && (
+            <li className="lg:hidden border-b-2 border-mtext flex justify-center px-4 py-3">
+              <LoginButton />
+            </li>
+          )}
         </ul>
       </nav>
       <div className="flex justify-end gap-5">
         <div className="lang-menu">
           <LanguageMenu isOpen={isLangMenuOpen} toggle={() => setIsLangMenuOpen(!isLangMenuOpen)} setLang={setLang} />
         </div>
-        <div className="hidden lg:block">
-          <LoginButton />
-        </div>
+        {!isLogin && (
+          <div className="hidden lg:block">
+            <LoginButton />
+          </div>
+        )}
         <Button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="rounded-full bg-white w-10 lg:hidden transition-all duration-300"

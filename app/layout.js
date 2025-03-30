@@ -10,6 +10,10 @@ const dmSans = DM_Sans({
 export const metadata = {
   title: 'Berjuang',
   description: 'Solusi Cerdas untuk Keuangan UMKM Anda!',
+  keywords: 'catatan keuangan, transaksi, manajemen keuangan, keuangan AI',
+  other: {
+    'dicoding:email': 'farizrifkyberliano@gmail.com, bima908070@gmail.com, savareyhano99@gmail.com',
+  },
 };
 
 export default function RootLayout({ children }) {

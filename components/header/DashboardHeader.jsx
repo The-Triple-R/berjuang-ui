@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { BsTranslate } from 'react-icons/bs';
-import { MdDarkMode } from 'react-icons/md';
 import useUserStore from '@/lib/zustand/useUserStore';
 import { Card } from '../ui/card';
 import axios from 'axios';
@@ -64,7 +62,7 @@ const DashboardHeader = ({ onOpenHandler }) => {
   };
 
   return (
-    <header className='sticky w-full z-999 top-0 left-0 bg-neutral-100'>
+    <header className='sticky w-full z-50 top-0 left-0 bg-neutral-100'>
       <div className='flex justify-between px-4 py-3 border-b border-border lg:flex-row-reverse'>
         <div className='lg:hidden'>
           <Button

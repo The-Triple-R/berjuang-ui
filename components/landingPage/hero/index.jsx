@@ -3,9 +3,10 @@ import Image from "next/image";
 import { motion } from 'framer-motion';
 import langData from '@/lib/lang';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { TbTrendingUp, TbPigMoney } from "react-icons/tb";
+import useUserStore from "@/lib/zustand/useUserStore";
+import { useRouter } from 'next/navigation';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -14,6 +15,17 @@ const fadeInUp = {
 
 const Hero = () => {
   const { lang } = useLanguageStore((state) => state);
+  const { isLogin } = useUserStore((state) => state);
+  const router = useRouter();
+
+  const handleLogin = () => {
+    if(isLogin) {
+      router.push('/dashboard');
+    } else {
+      localStorage.setItem('isPressLogin', 'true');
+      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/login/google`;
+    }
+  };
 
   return (
     <section id="home" className="flex flex-col align-center md:flex-row min-h-screen bg-bg w-full gap-8 py-8 px-4 md:px-8">
@@ -31,9 +43,7 @@ const Hero = () => {
           <span className="uppercase font-extrabold">Berjuang </span>
           { langData[lang].heroSection.description }
         </p>
-        <Link href="/dashboard">
-          <Button className="px-6 py-3 text-lg">{ langData[lang].heroSection.cta }</Button>
-        </Link>
+        <Button onClick={handleLogin} className="w-fit px-6 py-3 text-lg">{ langData[lang].heroSection.cta }</Button>
       </motion.div>
 
       <motion.div 

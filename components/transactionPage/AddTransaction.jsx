@@ -8,6 +8,8 @@ import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
 import langData from '@/lib/lang';
 import { BsPlusCircle } from 'react-icons/bs';
+import toast from 'react-hot-toast';
+import toastConfig from '@/lib/react-hot-toast/toastConfig';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -15,7 +17,7 @@ const formatRupiah = (value) => {
 };
 
 const AddTransaction = ({ transactionType, paging }) => {
-  const [moneyValueInput, setMoneyValueInput] = useState('');
+  const [moneyValueInput, setMoneyValueInput] = useState('0');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,8 +42,10 @@ const AddTransaction = ({ transactionType, paging }) => {
       );
       updateTransactions(transactionType, paging.currentPage);
       setIsOpen(false);
+
+      toast.success(langData[lang].toast.successAdd, toastConfig);
     } catch (error) {
-      console.log(error);
+      if (transactionType === 'credit') toast.error(langData[lang].toast.errorAddCredit, toastConfig);
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +65,7 @@ const AddTransaction = ({ transactionType, paging }) => {
   };
 
   const handleSetDefaultInput = () => {
-    setMoneyValueInput('');
+    setMoneyValueInput('0');
     setDescriptionInput('');
   };
 
@@ -118,7 +122,7 @@ const AddTransaction = ({ transactionType, paging }) => {
           </Button>
           <Button 
             onClick={handleSaveChanges} 
-            disabled={isLoading}
+            disabled={isLoading || moneyValueInput < 1}
             className={`px-5 py-2 rounded-md font-semibold transition-all ${
               isLoading 
                 ? 'opacity-50 cursor-not-allowed' 

@@ -22,7 +22,7 @@ const DashboardLayout = ({ children }) => {
     <div className='min-h-screen'>
       <DashboardHeader onOpenHandler={() => setIsOpen(!isOpen)} />
       <DashboardSideBar isOpen={isOpen} sidebarRef={sidebarRef} />
-      <main className='transition-all duration-500 ease-in-out lg:ml-64'>{children}</main>
+      <main className='transition-all duration-500 ease-in-out lg:ml-56'>{children}</main>
     </div>
   );
 };
