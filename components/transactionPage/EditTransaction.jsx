@@ -8,6 +8,8 @@ import axios from 'axios';
 import useUpdateTransactions from '@/app/hooks/useUpdateTransactions';
 import langData from '@/lib/lang';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import toast from 'react-hot-toast';
+import toastConfig from '@/lib/react-hot-toast/toastConfig';
 
 const formatRupiah = (value) => {
   if (!value) return '';
@@ -42,8 +44,10 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
       updateTransactions(transactionType, currentPage);
 
       setIsOpen(false);
+
+      toast.success(langData[lang].toast.successUpdate, toastConfig);
     } catch (error) {
-      console.log(error);
+      toast.error(langData[lang].toast.errorUpdate, toastConfig);
     } finally {
       setIsLoading(false);
     }
