@@ -14,7 +14,6 @@ export default function Home() {
   const { isHydrated } = useLanguageStore((state) => state);
   const { setUser, setIsLogin } = useUserStore((state) => state);
   const [isLoading, setIsLoading] = useState(true);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -23,22 +22,27 @@ export default function Home() {
         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
           withCredentials: true,
         });
+        const isPressLogin = localStorage.getItem('isPressLogin') || '';
+
+        if (isPressLogin === 'true') {
+          localStorage.removeItem('isPressLogin');
+          router.push('/dashboard');
+        } else {
+          setIsLoading(false);
+        }
 
         setIsLogin(true);
         setUser(data.data);
-        
-        router.push('/dashboard');
       } catch (error) {
+        console.log(error);
         setIsLoading(false);
       }
     };
 
     fetchDataUser();
-  }, []);
+  }, [router, setIsLogin, setUser]);
 
-  if (isLoading) return null;
-
-  if (!isHydrated) return null;
+  if (isLoading || !isHydrated) return null;
 
   return (
     <LandingLayout>

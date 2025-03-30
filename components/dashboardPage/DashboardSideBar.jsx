@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
 import { SiSimpleanalytics } from 'react-icons/si';
-import { FaArrowDown, FaArrowUp, FaMoneyBillWave } from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaMoneyBillWave, FaRocket } from 'react-icons/fa';
 import Link from 'next/link';
 
 const DashboardSideBar = ({ isOpen, sidebarRef }) => {
@@ -13,6 +13,7 @@ const DashboardSideBar = ({ isOpen, sidebarRef }) => {
     { href: '/dashboard', label: 'Dashboard', icon: <SiSimpleanalytics /> },
     { href: '/transaction/in', label: 'Transaction In', icon: <FaArrowDown /> },
     { href: '/transaction/out', label: 'Transaction Out', icon: <FaArrowUp /> },
+    { href: '/', label: 'Landingpage', icon: <FaRocket /> },
   ];
 
   return (
