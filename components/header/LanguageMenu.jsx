@@ -8,7 +8,7 @@ const LanguageMenu = ({ isOpen, toggle, setLang, variant = "default" }) => (
       <BsTranslate />
     </Button>
     <ul
-      className={`z-50 absolute top-[calc(100%+1rem)] left-1/2 transform -translate-x-1/2 transition-all duration-300 ${
+      className={`z-50 absolute top-[calc(100%+1rem)] right-0 transform transition-all duration-300 ${
         isOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 pointer-events-none translate-y-[-10px]"
       }`}
     >
