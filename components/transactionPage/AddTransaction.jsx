@@ -118,7 +118,7 @@ const AddTransaction = ({ transactionType, paging }) => {
           </Button>
           <Button 
             onClick={handleSaveChanges} 
-            disabled={isLoading}
+            disabled={isLoading || moneyValueInput < 1}
             className={`px-5 py-2 rounded-md font-semibold transition-all ${
               isLoading 
                 ? 'opacity-50 cursor-not-allowed' 

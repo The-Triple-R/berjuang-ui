@@ -75,7 +75,7 @@ const EditTransaction = ({ id, amount, description, transactionType, currentPage
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className='text-xl text-white bg-[#4D4FED] text-[1rem]' onClick={handleSetDefaultInput}>
-          Edit
+          {lang == "id" ? "Ubah" : "Edit"}
           <TbEdit size={24} />
         </Button>
       </DialogTrigger>
