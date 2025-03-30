@@ -20,7 +20,7 @@ const DashboardSideBar = ({ isOpen, sidebarRef }) => {
       { href: '/dashboard', label: 'Dashboard', icon: <SiSimpleanalytics /> },
       { href: '/transaction/in', label: lang == 'id' ? 'Transaksi Masuk' : 'Transaction In', icon: <FaArrowDown /> },
       { href: '/transaction/out', label: lang == 'id' ? 'Transaksi Keluar' : 'Transaction Out', icon: <FaArrowUp /> },
-    { href: '/', label: 'Landingpage', icon: <FaRocket /> },
+      { href: '/', label: lang == 'id' ? 'Halaman Utama' : 'Landing Page', icon: <FaRocket /> },
     ]);
   }, [lang]);
 

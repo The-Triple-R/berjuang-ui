@@ -15,7 +15,7 @@ const formatRupiah = (value) => {
 };
 
 const AddTransaction = ({ transactionType, paging }) => {
-  const [moneyValueInput, setMoneyValueInput] = useState('');
+  const [moneyValueInput, setMoneyValueInput] = useState('0');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +61,7 @@ const AddTransaction = ({ transactionType, paging }) => {
   };
 
   const handleSetDefaultInput = () => {
-    setMoneyValueInput('');
+    setMoneyValueInput('0');
     setDescriptionInput('');
   };
 
