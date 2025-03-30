@@ -13,6 +13,7 @@ import EditTransaction from './EditTransaction';
 import ViewTransaction from './ViewTransaction';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
 import langData from '@/lib/lang';
+import DeleteButton from './DeleteButton';
 
 export function TableTransaction({ datas, paging, transactionType, mainHeader }) {
   const updateTransactions = useUpdateTransactions();
@@ -74,10 +75,7 @@ export function TableTransaction({ datas, paging, transactionType, mainHeader })
                     <EditTransaction amount={data.amount} description={data.description} id={data.id} transactionType={transactionType} currentPage={currentPage} />
                   </TableData>
                   <TableData className='pl-1 pr-3 w-[115px]'>
-                    <Button className='text-xl text-white bg-[#D30368] text-[1rem]' onClick={() => handleDelete(data.id)}>
-                    {langData[lang].transactionPageTable.delete}
-                      <MdOutlineCancel size={24} />
-                    </Button>
+                    <DeleteButton onDelete={() => handleDelete(data.id)} />
                   </TableData>
                 </tr>
               ))}

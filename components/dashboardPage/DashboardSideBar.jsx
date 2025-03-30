@@ -5,16 +5,24 @@ import { Button } from '../ui/button';
 import { SiSimpleanalytics } from 'react-icons/si';
 import { FaArrowDown, FaArrowUp, FaMoneyBillWave, FaRocket } from 'react-icons/fa';
 import Link from 'next/link';
+import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import { useEffect, useState } from 'react';
 
 const DashboardSideBar = ({ isOpen, sidebarRef }) => {
-  const pathname = usePathname();
+  const [menuItems, setMenuItems] = useState([]);
 
-  const menuItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: <SiSimpleanalytics /> },
-    { href: '/transaction/in', label: 'Transaction In', icon: <FaArrowDown /> },
-    { href: '/transaction/out', label: 'Transaction Out', icon: <FaArrowUp /> },
+  const pathname = usePathname();
+  
+  const { lang } = useLanguageStore();
+
+  useEffect(() => {
+    setMenuItems([
+      { href: '/dashboard', label: 'Dashboard', icon: <SiSimpleanalytics /> },
+      { href: '/transaction/in', label: lang == 'id' ? 'Transaksi Masuk' : 'Transaction In', icon: <FaArrowDown /> },
+      { href: '/transaction/out', label: lang == 'id' ? 'Transaksi Keluar' : 'Transaction Out', icon: <FaArrowUp /> },
     { href: '/', label: 'Landingpage', icon: <FaRocket /> },
-  ];
+    ]);
+  }, [lang]);
 
   return (
     <aside

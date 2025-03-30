@@ -7,6 +7,7 @@ import axios from 'axios';
 import { formatToRupiah } from '@/lib/utils';
 import { Banknote, ArrowDown, ArrowUp } from 'lucide-react';
 import useLanguageStore from '@/lib/zustand/useLanguageStore';
+import langData from '@/lib/lang';
 
 const DashboardSection = () => {
   const [userFinanceRawData, setUserFinanceRawData] = useState(null);
@@ -17,17 +18,17 @@ const DashboardSection = () => {
 
   const formatFinanceStats = (balances, debit, credit) => [
     {
-      title: 'Saldo',
+      title: langData[lang].dashboardPage.balances,
       value: formatToRupiah(balances),
       icon: <Banknote className="w-8 h-8 text-green-500" />,
     },
     {
-      title: 'Jumlah Transaksi Masuk',
+      title: langData[lang].dashboardPage.totalTransactionIn,
       value: debit,
       icon: <ArrowDown className="w-8 h-8 text-blue-500" />,
     },
     {
-      title: 'Jumlah Transaksi Keluar',
+      title: langData[lang].dashboardPage.totalTransactionOut,
       value: credit,
       icon: <ArrowUp className="w-8 h-8 text-red-500" />,
     },
@@ -39,7 +40,6 @@ const DashboardSection = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/users/financial-report`,
         { withCredentials: true }
       );
-
       const fetchedData = data.data;
       setUserFinanceRawData(fetchedData);
       setLatestTransactionsHistory(fetchedData.transactions.latestTransactionsHistory);
