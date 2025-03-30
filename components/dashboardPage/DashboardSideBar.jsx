@@ -27,9 +27,9 @@ const DashboardSideBar = ({ isOpen, sidebarRef }) => {
   return (
     <aside
       ref={sidebarRef}
-      className={`sidebar fixed inset-y-0 start-0 flex flex-col w-64 h-screen bg-neutral-100 dark:bg-neutral-500 border-e border-black transition-all duration-500 ease-in-out z-50 ${
+      className={`sidebar fixed inset-y-0 start-0 flex flex-col w-56 h-screen bg-neutral-100 dark:bg-neutral-500 border-e border-black transition-all duration-500 ease-in-out z-50 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 lg:min-w-64 lg:block`}
+      } lg:translate-x-0 lg:min-w-56 lg:block`}
     >
       <h1 className="uppercase font-extrabold py-6 px-7 text-2xl text-mtext flex items-center gap-2">
         <FaMoneyBillWave /> <span>berj<span className="text-main">uang</span></span>
