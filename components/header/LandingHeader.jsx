@@ -8,6 +8,7 @@ import MenuItem from "./MenuItem";
 import LanguageMenu from "./LanguageMenu";
 import LoginButton from "./LoginButton";
 import useUserStore from "@/lib/zustand/useUserStore";
+import AvatarButton from "./AvatarButton";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -60,11 +61,11 @@ const Header = () => {
         <div className="lang-menu">
           <LanguageMenu isOpen={isLangMenuOpen} toggle={() => setIsLangMenuOpen(!isLangMenuOpen)} setLang={setLang} />
         </div>
-        {!isLogin && (
+        {!isLogin ? (
           <div className="hidden lg:block">
             <LoginButton />
           </div>
-        )}
+        ) : <AvatarButton />}
         <Button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="rounded-full bg-white w-10 lg:hidden transition-all duration-300"
